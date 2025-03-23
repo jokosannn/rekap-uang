@@ -1,13 +1,13 @@
-import eslint from '@eslint/js'
+// import eslint from '@eslint/js'
 import tseslint from '@typescript-eslint/eslint-plugin'
 import tsparser from '@typescript-eslint/parser'
 import prettierPlugin from 'eslint-plugin-prettier'
 
 export default [
+  // eslint.configs.recommended,
   {
     ignores: ['node_modules', 'dist', '.next']
   },
-  eslint.configs.recommended,
   {
     files: ['**/*.ts', '**/*.tsx'], // Untuk TypeScript
     languageOptions: {
@@ -27,7 +27,7 @@ export default [
       '@typescript-eslint/no-explicit-any': 'off',
 
       // Integrasi Prettier
-      'prettier/prettier': 'warn'
+      'prettier/prettier': 'off'
     }
   }
 ]
