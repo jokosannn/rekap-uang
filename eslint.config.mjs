@@ -1,16 +1,50 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import eslint from '@eslint/js'
+import tseslint from '@typescript-eslint/eslint-plugin'
+import tsparser from '@typescript-eslint/parser'
+import prettierPlugin from 'eslint-plugin-prettier'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+export default [
+  {
+    ignores: ['node_modules', 'dist', '.next']
+  },
+  eslint.configs.recommended,
+  {
+    files: ['**/*.ts', '**/*.tsx'], // Untuk TypeScript
+    languageOptions: {
+      parser: tsparser,
+      sourceType: 'module'
+    },
+    plugins: {
+      '@typescript-eslint': tseslint,
+      prettier: prettierPlugin
+    },
+    rules: {
+      // Aturan Next.js
+      'next/no-img-element': 'off',
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+      // Aturan TypeScript
+      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-explicit-any': 'off',
 
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-];
+      // Integrasi Prettier
+      'prettier/prettier': 'warn'
+    }
+  }
+]
 
-export default eslintConfig;
+// import { dirname } from "path";
+// import { fileURLToPath } from "url";
+// import { FlatCompat } from "@eslint/eslintrc";
+
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
+
+// const compat = new FlatCompat({
+//   baseDirectory: __dirname,
+// });
+
+// const eslintConfig = [
+//   ...compat.extends("next/core-web-vitals", "next/typescript"),
+// ];
+
+// export default eslintConfig;

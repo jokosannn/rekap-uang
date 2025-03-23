@@ -1,0 +1,21 @@
+{
+  "importOrder": [
+    "^react$",
+    "^(node:.*)$",
+    "^(next/(.*)$)|^(next$)",
+    "<THIRD_PARTY_MODULES>",
+    "^@/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "semi": false,
+  "tabWidth": 2,
+  "printWidth": 105,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "arrowParens": "avoid",
+  "endOfLine": "lf",
+  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
+  "tailwindFunctions": ["clsx", "cn"]
+}
