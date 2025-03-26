@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
+import { Area, AreaChart, Bar, BarChart, CartesianGrid, Line, LineChart, XAxis } from 'recharts'
 
 import {
   Card,
@@ -129,7 +129,16 @@ const chartConfig = {
 
 export function ChartAreaInteractive() {
   const isMobile = useIsMobile()
-  const [timeRange, setTimeRange] = React.useState('7d')
+  const [timeRange, setTimeRange] = React.useState('30d')
+  const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig | 'all'>('all')
+
+  const total = React.useMemo(
+    () => ({
+      desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),
+      mobile: chartData.reduce((acc, curr) => acc + curr.mobile, 0)
+    }),
+    []
+  )
 
   React.useEffect(() => {
     if (isMobile) {
@@ -156,8 +165,14 @@ export function ChartAreaInteractive() {
       <CardHeader>
         <CardTitle>Total Transaksi</CardTitle>
         <CardDescription>
-          <span className="hidden @[540px]/card:block">Total for the last 3 months</span>
-          <span className="@[540px]/card:hidden">Last 3 months</span>
+          <span className="hidden @[540px]/card:block">
+            Total selama {timeRange === '7d' ? '7 Hari' : timeRange === '30d' ? '1 bulan' : '3 bulan'}{' '}
+            terakhir
+          </span>
+          <span className="@[540px]/card:hidden">
+            Total selama {timeRange === '7d' ? '7 Hari' : timeRange === '30d' ? '1 bulan' : '3 bulan'}{' '}
+            terakhir
+          </span>
         </CardDescription>
         <CardAction>
           <ToggleGroup
@@ -167,9 +182,9 @@ export function ChartAreaInteractive() {
             variant="outline"
             className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
           >
-            <ToggleGroupItem value="90d">Last 3 months</ToggleGroupItem>
-            <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
-            <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
+            <ToggleGroupItem value="90d">3 bulan terakhir</ToggleGroupItem>
+            <ToggleGroupItem value="30d">1 bulan terakhir</ToggleGroupItem>
+            <ToggleGroupItem value="7d">7 hari terakhir</ToggleGroupItem>
           </ToggleGroup>
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger
@@ -181,20 +196,154 @@ export function ChartAreaInteractive() {
             </SelectTrigger>
             <SelectContent className="rounded-xl">
               <SelectItem value="90d" className="rounded-lg">
-                Last 3 months
+                3 bulan terakhir
               </SelectItem>
               <SelectItem value="30d" className="rounded-lg">
-                Last 30 days
+                1 bulan terakhir
               </SelectItem>
               <SelectItem value="7d" className="rounded-lg">
-                Last 7 days
+                7 hari terakhir
               </SelectItem>
             </SelectContent>
           </Select>
         </CardAction>
       </CardHeader>
+      <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
+        {/* <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
+          <CardTitle>Bar Chart - Interactive</CardTitle>
+          <CardDescription>Showing total visitors for the last 3 months</CardDescription>
+        </div> */}
+        <div className="grid grid-cols-3">
+          {['desktop', 'mobile'].map(key => {
+            const chart = key as keyof typeof chartConfig
+            return (
+              <button
+                key={chart}
+                data-active={activeChart === chart}
+                className="data-[active=true]:bg-muted/50 relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
+                onClick={() => setActiveChart(chart)}
+              >
+                <span className="text-muted-foreground text-xs">{chartConfig[chart].label}</span>
+                <span className="text-lg leading-none font-bold sm:text-3xl">
+                  Rp. {total[key as keyof typeof total].toLocaleString()}
+                </span>
+              </button>
+            )
+          })}
+          <button
+            data-active={activeChart === 'all'}
+            className="data-[active=true]:bg-muted/50 relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
+            onClick={() => setActiveChart('all')}
+          >
+            <span className="text-muted-foreground text-xs">All</span>
+            <span className="text-lg leading-none font-bold sm:text-3xl">
+              Rp. {(total['mobile'] + total['desktop']).toLocaleString()}
+            </span>
+          </button>
+        </div>
+      </CardHeader>
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
         <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
+          <LineChart
+            accessibilityLayer
+            data={filteredData}
+            margin={{
+              left: 12,
+              right: 12
+            }}
+          >
+            {/* <defs>
+              <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="var(--color-desktop)" stopOpacity={1.0} />
+                <stop offset="95%" stopColor="var(--color-desktop)" stopOpacity={0.1} />
+              </linearGradient>
+              <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="var(--color-mobile)" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="var(--color-mobile)" stopOpacity={0.1} />
+              </linearGradient>
+            </defs> */}
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="date"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              minTickGap={32}
+              tickFormatter={value => {
+                const date = new Date(value)
+                return date.toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric'
+                })
+              }}
+            />
+            <ChartTooltip
+              cursor={false}
+              defaultIndex={isMobile ? -1 : 10}
+              content={
+                <ChartTooltipContent
+                  labelFormatter={value => {
+                    return new Date(value).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric'
+                    })
+                  }}
+                  indicator="dot"
+                />
+              }
+            />
+            {activeChart !== 'all' && (
+              // <Area
+              //   dataKey={activeChart}
+              //   type="natural"
+              //   fill={activeChart === 'mobile' ? 'url(#fillMobile)' : 'url(#fillDesktop)'}
+              //   stroke={`var(--color-${activeChart})`}
+              //   stackId="a"
+              // />
+              // <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} radius={4} />
+              <Line
+                dataKey={activeChart}
+                type="monotone"
+                stroke={`var(--color-${activeChart})`}
+                strokeWidth={2}
+                dot={false}
+              />
+            )}
+            {activeChart === 'all' && (
+              // <Area
+              //   dataKey="mobile"
+              //   type="natural"
+              //   fill="url(#fillMobile)"
+              //   stroke="var(--color-mobile)"
+              //   stackId="a"
+              // />
+              // <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+              <Line
+                dataKey="mobile"
+                type="monotone"
+                stroke="var(--color-mobile)"
+                strokeWidth={2}
+                dot={false}
+              />
+            )}
+            {activeChart === 'all' && (
+              // <Area
+              //   dataKey="desktop"
+              //   type="natural"
+              //   fill="url(#fillDesktop)"
+              //   stroke="var(--color-desktop)"
+              //   stackId="a"
+              // />
+              // <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+              <Line
+                dataKey="desktop"
+                type="monotone"
+                stroke="var(--color-desktop)"
+                strokeWidth={2}
+                dot={false}
+              />
+            )}
+          </LineChart>
           {/* <AreaChart data={filteredData}>
             <defs>
               <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
@@ -251,7 +400,7 @@ export function ChartAreaInteractive() {
               stackId="a"
             />
           </AreaChart> */}
-          <BarChart accessibilityLayer data={filteredData}>
+          {/* <BarChart accessibilityLayer data={filteredData}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="date"
@@ -285,7 +434,7 @@ export function ChartAreaInteractive() {
             />
             <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
             <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
-          </BarChart>
+          </BarChart> */}
         </ChartContainer>
       </CardContent>
     </Card>

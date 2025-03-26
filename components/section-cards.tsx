@@ -25,56 +25,60 @@ export function SectionCards() {
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Total Saldo</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            Rp. 1,250,000
+          <CardTitle className="truncate text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+            Rp 70.250.000
           </CardTitle>
           <div className="text-muted-foreground line-clamp-1 flex gap-2 text-sm">
-            -20,1% dari bulan lalu <IconTrendingDown className="size-4" />
+            <span className="text-destructive">-20,1%</span> dari bulan lalu{' '}
+            <IconTrendingDown className="size-4" />
           </div>
           <CardAction>
-            <IconCoin />
+            <IconCoin strokeWidth={1.5} />
           </CardAction>
         </CardHeader>
       </Card>
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Tabungan</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            Rp. 550,000
+          <CardTitle className="truncate text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+            Rp 7.250.000
           </CardTitle>
           <div className="text-muted-foreground line-clamp-1 flex gap-2 text-sm">
-            +20,1% dari bulan lalu <IconTrendingUp className="size-4" />
+            <span className="text-green-600">+20,1%</span> dari bulan lalu{' '}
+            <IconTrendingUp className="size-4" />
           </div>
           <CardAction>
-            <IconWallet />
+            <IconWallet strokeWidth={1.5} />
           </CardAction>
         </CardHeader>
       </Card>
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Pemasukan</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            Rp. 250,000
+          <CardTitle className="truncate text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+            Rp 2.000.000
           </CardTitle>
           <div className="text-muted-foreground line-clamp-1 flex gap-2 text-sm">
-            +20,1% dari bulan lalu <IconTrendingUp className="size-4" />
+            <span className="text-green-600">+20,1%</span> dari bulan lalu
+            <IconTrendingUp className="size-4" />
           </div>
           <CardAction>
-            <IconMoneybagPlus />
+            <IconMoneybagPlus strokeWidth={1.5} />
           </CardAction>
         </CardHeader>
       </Card>
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Pengeluaran</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            Rp. 50,000
+          <CardTitle className="truncate text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+            Rp 800.000
           </CardTitle>
           <div className="text-muted-foreground line-clamp-1 flex gap-2 text-sm">
-            -10% dari bulan lalu <IconTrendingDown className="size-4" />
+            <span className="text-destructive">-20,1%</span> dari bulan lalu{' '}
+            <IconTrendingDown className="size-4" />
           </div>
           <CardAction>
-            <IconMoneybagMinus />
+            <IconMoneybagMinus strokeWidth={1.5} />
           </CardAction>
         </CardHeader>
       </Card>

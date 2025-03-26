@@ -45,22 +45,22 @@ const data = {
   navMain: [
     {
       title: 'Dashboard',
-      url: '#',
+      url: '/dashboard',
       icon: IconDashboard
     },
     {
       title: 'Transaksi',
-      url: '#',
+      url: '/dashboard/transaction',
       icon: IconCreditCardPay
     },
     {
       title: 'Tabungan',
-      url: '#',
+      url: '/dashboard/savings',
       icon: IconWallet
     },
     {
       title: 'Laporan',
-      url: '#',
+      url: '/dashboard/reports',
       icon: IconReport
     }
   ]
