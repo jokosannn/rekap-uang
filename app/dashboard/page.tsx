@@ -1,11 +1,21 @@
 import { IconInnerShadowTop } from '@tabler/icons-react'
+import { TrendingUp } from 'lucide-react'
 
 import { ChartAreaInteractive } from '@/components/chart-area-interactive'
 import { DataTable } from '@/components/data-table'
 import { Overview } from '@/components/overview'
+import { OverviewExpense } from '@/components/overview-expense'
+import { OverviewIncome } from '@/components/overview-income'
 import { RecentTransaction } from '@/components/recent-transaction'
 import { SectionCards } from '@/components/section-cards'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card'
 
 import data from './data.json'
 
@@ -26,16 +36,46 @@ export default function Page() {
 
         <div className="px-4 lg:px-6">
           <ChartAreaInteractive />
-          <div className="mt-6 grid flex-1 scroll-mt-20 items-start gap-6 md:grid-cols-2 lg:grid-cols-7">
+
+          <div className="mt-6 grid flex-1 scroll-mt-20 items-start gap-6 lg:grid-cols-8">
             <Card className="lg:col-span-4">
               <CardHeader>
-                <CardTitle>Overview</CardTitle>
+                <CardTitle>Bar Chart - Horizontal</CardTitle>
+                <CardDescription>January - June 2024</CardDescription>
               </CardHeader>
-              <CardContent className="pl-2">
-                <Overview />
+              <CardContent>
+                <OverviewExpense />
               </CardContent>
+              <CardFooter className="flex-col items-start gap-2 text-sm">
+                <div className="flex gap-2 leading-none font-medium">
+                  Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+                </div>
+                <div className="text-muted-foreground leading-none">
+                  Showing total visitors for the last 6 months
+                </div>
+              </CardFooter>
             </Card>
-            <Card className="lg:col-span-3">
+            <Card className="lg:col-span-4">
+              <CardHeader>
+                <CardTitle>Bar Chart - Horizontal</CardTitle>
+                <CardDescription>January - June 2024</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <OverviewIncome />
+              </CardContent>
+              <CardFooter className="flex-col items-start gap-2 text-sm">
+                <div className="flex gap-2 leading-none font-medium">
+                  Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+                </div>
+                <div className="text-muted-foreground leading-none">
+                  Showing total visitors for the last 6 months
+                </div>
+              </CardFooter>
+            </Card>
+          </div>
+
+          <div className="mt-6">
+            <Card>
               <CardHeader>
                 <CardTitle>Transaksi Terakhir</CardTitle>
                 <CardDescription>5 transaksi bulan ini.</CardDescription>

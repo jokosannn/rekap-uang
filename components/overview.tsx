@@ -1,6 +1,6 @@
 'use client'
 
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, LabelList, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
 import { useIsMobile } from '@/hooks/use-mobile'
 
@@ -24,57 +24,88 @@ const formatNumber = (number: number) => {
 }
 
 const data = [
-  { name: 'Jan', expense: 250000, income: 1000000 },
-  { name: 'Feb', expense: 320000, income: 1000000 },
-  { name: 'Mar', expense: 15000, income: 1000000 },
-  { name: 'Apr', expense: 400000, income: 520000 },
-  { name: 'May', expense: 28000, income: 1500000 },
-  { name: 'Jun', expense: 330000, income: 1000000 },
-  { name: 'Jul', expense: 210000, income: 1000000 },
-  { name: 'Aug', expense: 37000, income: 1300000 },
-  { name: 'Sep', expense: 1000000, income: 1100000 },
-  { name: 'Oct', expense: 340000, income: 1600000 },
-  { name: 'Nov', expense: 220000, income: 1900000 },
-  { name: 'Dec', expense: 31000, income: 1800000 }
+  { month: 'Jan', expense: 250000, income: 1000000 },
+  { month: 'Feb', expense: 320000, income: 1000000 },
+  { month: 'Mar', expense: 15000, income: 1000000 },
+  { month: 'Apr', expense: 400000, income: 520000 },
+  { month: 'May', expense: 28000, income: 1500000 },
+  { month: 'Jun', expense: 330000, income: 1000000 },
+  { month: 'Jul', expense: 210000, income: 1000000 },
+  { month: 'Aug', expense: 37000, income: 1300000 },
+  { month: 'Sep', expense: 1000000, income: 1100000 },
+  { month: 'Oct', expense: 340000, income: 1600000 },
+  { month: 'Nov', expense: 220000, income: 1900000 },
+  { month: 'Dec', expense: 31000, income: 1800000 }
 ]
 
 const chartConfig = {
-  visitors: {
-    label: 'Visitors'
-  },
-  desktop: {
-    label: 'Expense',
+  income: {
+    label: 'Income',
     color: 'var(--color-chart-1)'
   },
-  mobile: {
-    label: 'Income',
+  expense: {
+    label: 'Expense',
     color: 'var(--color-chart-2)'
+  },
+  label: {
+    color: 'var(--background)'
   }
 } satisfies ChartConfig
 
-export function Overview() {
-  const isMobile = useIsMobile()
+// const chartConfig = {
+//   visitors: {
+//     label: 'Visitors'
+//   },
+//   desktop: {
+//     label: 'Expense',
+//     color: 'var(--color-chart-1)'
+//   },
+//   mobile: {
+//     label: 'Income',
+//     color: 'var(--color-chart-2)'
+//   }
+// } satisfies ChartConfig
 
+export function Overview() {
   return (
     <ResponsiveContainer width="100%">
       <ChartContainer config={chartConfig}>
-        <BarChart data={data} accessibilityLayer>
-          <XAxis dataKey="name" fontSize={12} tickLine={false} axisLine={false} />
-
+        <BarChart
+          accessibilityLayer
+          data={data}
+          layout="vertical"
+          // margin={{
+          //   right: 16
+          // }}
+        >
+          <CartesianGrid horizontal={false} />
           <YAxis
-            fontSize={12}
+            dataKey="month"
+            type="category"
             tickLine={false}
+            tickMargin={10}
             axisLine={false}
-            tickFormatter={value => `Rp ${formatNumber(value)}`}
+            tickFormatter={value => value.slice(0, 3)}
+            hide
           />
-
-          <ChartTooltip
-            defaultIndex={isMobile ? -1 : 10}
-            content={<ChartTooltipContent className="w-[200px] capitalize" />}
-          />
-
-          <Bar dataKey="expense" fill="var(--color-mobile)" radius={4} />
-          <Bar dataKey="income" fill="var(--color-desktop)" radius={4} />
+          <XAxis dataKey="income" type="number" hide />
+          <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
+          <Bar dataKey="income" layout="vertical" fill="var(--color-income)" radius={4}>
+            <LabelList
+              dataKey="month"
+              position="insideLeft"
+              offset={8}
+              className="fill-foreground"
+              fontSize={12}
+            />
+            <LabelList
+              dataKey="income"
+              position="right"
+              offset={8}
+              className="fill-foreground"
+              fontSize={12}
+            />
+          </Bar>
         </BarChart>
       </ChartContainer>
     </ResponsiveContainer>

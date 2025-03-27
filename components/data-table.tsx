@@ -81,7 +81,7 @@ import { Separator } from '@/components/ui/separator'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useIsMobile } from '@/hooks/use-mobile'
-import { cn } from '@/lib/utils'
+import { cn, formatRupiah } from '@/lib/utils'
 
 export const schema = z.object({
   id: z.number(),
@@ -156,21 +156,6 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     enableHiding: false
   },
   {
-    accessorKey: 'jam',
-    header: 'Jam',
-    cell: ({ row }) => {
-      // return <TableCellViewer item={row.original} />
-      return (
-        <div className="w-16">
-          <Badge variant="outline" className="text-muted-foreground">
-            {format(new Date(row.original.date), 'HH:mm', { locale: id })}
-          </Badge>
-        </div>
-      )
-    },
-    enableHiding: false
-  },
-  {
     accessorKey: 'type',
     header: 'Section Type',
     cell: ({ row }) => (
@@ -199,7 +184,8 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
   },
   {
     accessorKey: 'amount',
-    header: () => <div className="w-full">Nominal</div>
+    header: () => <div className="w-full">Nominal</div>,
+    cell: ({ row }) => <span>{formatRupiah(Number(row.original.amount))}</span>
   },
   {
     accessorKey: 'description',
@@ -311,7 +297,7 @@ export function DataTable({ data: initialData }: { data: z.infer<typeof schema>[
 
   return (
     <div className="w-full flex-col justify-start gap-6">
-      <div className="mb-4 flex items-center justify-between gap-4 px-4 lg:px-6">
+      <div className="mb-4 flex items-center justify-between gap-2 px-4 lg:px-6">
         <div className="flex w-full items-center gap-2">
           <Input
             placeholder="Cari sesuatu?"
@@ -325,8 +311,8 @@ export function DataTable({ data: initialData }: { data: z.infer<typeof schema>[
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
                 <IconLayoutColumns />
-                <span className="hidden lg:inline">Customize Columns</span>
-                <span className="lg:hidden">Columns</span>
+                <span className="hidden lg:inline">Edit Kolom</span>
+                <span className="lg:hidden">Kolom</span>
                 <IconChevronDown />
               </Button>
             </DropdownMenuTrigger>
@@ -350,7 +336,7 @@ export function DataTable({ data: initialData }: { data: z.infer<typeof schema>[
           </DropdownMenu>
           <Button variant="outline" size="sm">
             <IconPlus />
-            <span className="hidden lg:inline">Add Section</span>
+            <span className="hidden lg:inline">Tambah Transaksi</span>
           </Button>
         </div>
       </div>

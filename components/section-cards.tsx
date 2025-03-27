@@ -18,6 +18,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
+import { formatRupiah } from '@/lib/utils'
 
 export function SectionCards() {
   return (
@@ -26,7 +27,7 @@ export function SectionCards() {
         <CardHeader>
           <CardDescription>Total Saldo</CardDescription>
           <CardTitle className="truncate text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            Rp 70.250.000
+            {formatRupiah(75350000)}
           </CardTitle>
           <div className="text-muted-foreground line-clamp-1 flex gap-2 text-sm">
             <span className="text-destructive">-20,1%</span> dari bulan lalu{' '}
@@ -41,7 +42,7 @@ export function SectionCards() {
         <CardHeader>
           <CardDescription>Tabungan</CardDescription>
           <CardTitle className="truncate text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            Rp 7.250.000
+            {formatRupiah(4350000)}
           </CardTitle>
           <div className="text-muted-foreground line-clamp-1 flex gap-2 text-sm">
             <span className="text-green-600">+20,1%</span> dari bulan lalu{' '}
@@ -56,7 +57,7 @@ export function SectionCards() {
         <CardHeader>
           <CardDescription>Pemasukan</CardDescription>
           <CardTitle className="truncate text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            Rp 2.000.000
+            {formatRupiah(3500000)}
           </CardTitle>
           <div className="text-muted-foreground line-clamp-1 flex gap-2 text-sm">
             <span className="text-green-600">+20,1%</span> dari bulan lalu
@@ -71,7 +72,7 @@ export function SectionCards() {
         <CardHeader>
           <CardDescription>Pengeluaran</CardDescription>
           <CardTitle className="truncate text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            Rp 800.000
+            {formatRupiah(750000)}
           </CardTitle>
           <div className="text-muted-foreground line-clamp-1 flex gap-2 text-sm">
             <span className="text-destructive">-20,1%</span> dari bulan lalu{' '}
