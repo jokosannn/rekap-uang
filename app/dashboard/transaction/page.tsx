@@ -2,7 +2,7 @@ import React from 'react'
 
 import { IconInnerShadowTop } from '@tabler/icons-react'
 
-import { DataTable } from '@/components/data-table'
+import { DataTable } from '@/app/dashboard/transaction/_partials/data-table'
 import { Card } from '@/components/ui/card'
 
 import data from '../data.json'

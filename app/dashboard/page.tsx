@@ -1,8 +1,8 @@
 import { IconInnerShadowTop } from '@tabler/icons-react'
 import { TrendingUp } from 'lucide-react'
 
+import { DataTable } from '@/app/dashboard/transaction/_partials/data-table'
 import { ChartAreaInteractive } from '@/components/chart-area-interactive'
-import { DataTable } from '@/components/data-table'
 import { Overview } from '@/components/overview'
 import { OverviewExpense } from '@/components/overview-expense'
 import { OverviewIncome } from '@/components/overview-income'

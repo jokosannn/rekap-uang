@@ -35,7 +35,7 @@ const chartConfig = {
 export function OverviewIncome() {
   return (
     <ResponsiveContainer width="100%">
-      <ChartContainer config={chartConfig} className="aspect-auto h-[350px] w-full">
+      <ChartContainer config={chartConfig} className="aspect-auto h-[450px] w-full">
         <BarChart
           accessibilityLayer
           data={chartData}
@@ -55,7 +55,7 @@ export function OverviewIncome() {
             tickFormatter={value => value.slice(0, 3)}
           />
           <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-          <Bar dataKey="income" layout="vertical" fill="var(--color-income)" radius={4}>
+          <Bar dataKey="income" layout="vertical" fill="var(--color-income)" radius={8}>
             <LabelList
               dataKey="income"
               position="right"
