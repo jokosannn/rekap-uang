@@ -2,10 +2,11 @@ import React from 'react'
 
 import { IconInnerShadowTop } from '@tabler/icons-react'
 
-import { DataTable } from '@/app/dashboard/transaction/_partials/data-table'
-import { Card } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 
-import data from '../data.json'
+import { columns } from './_partials/colums'
+import { DataTable } from './_partials/date-table'
+import data from './_partials/transactions.json'
 
 export default function TransactionPage() {
   return (
@@ -21,7 +22,9 @@ export default function TransactionPage() {
       </div>
       <div className="static z-10 mt-20 px-4 py-4 md:py-6 lg:px-6">
         <Card className="@container/card">
-          <DataTable data={data} />
+          <CardContent>
+            <DataTable data={data} columns={columns} />
+          </CardContent>
         </Card>
       </div>
     </div>

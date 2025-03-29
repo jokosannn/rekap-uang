@@ -1,9 +1,7 @@
 import { IconInnerShadowTop } from '@tabler/icons-react'
 import { TrendingUp } from 'lucide-react'
 
-import { DataTable } from '@/app/dashboard/transaction/_partials/data-table'
 import { ChartAreaInteractive } from '@/components/chart-area-interactive'
-import { Overview } from '@/components/overview'
 import { OverviewExpense } from '@/components/overview-expense'
 import { OverviewIncome } from '@/components/overview-income'
 import { RecentTransaction } from '@/components/recent-transaction'
@@ -16,8 +14,6 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
-
-import data from './data.json'
 
 export default function Page() {
   return (
