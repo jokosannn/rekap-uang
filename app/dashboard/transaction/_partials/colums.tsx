@@ -11,6 +11,7 @@ import { cn, formatRupiah } from '@/lib/utils'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
 import { Transaction } from './schema'
+import TableCellViewer from './table-cell-viewer'
 
 export const columns: ColumnDef<Transaction>[] = [
   {
@@ -39,12 +40,15 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: 'date',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Tanggal" />,
+    // cell: ({ row }) => {
+    //   return (
+    //     <span className="truncate font-medium">
+    //       {format(new Date(row.original.date), 'dd MMMM yyyy', { locale: id })}
+    //     </span>
+    //   )
+    // },
     cell: ({ row }) => {
-      return (
-        <span className="truncate font-medium">
-          {format(new Date(row.original.date), 'dd MMMM yyyy', { locale: id })}
-        </span>
-      )
+      return <TableCellViewer item={row.original} />
     }
   },
   {
@@ -99,9 +103,9 @@ export const columns: ColumnDef<Transaction>[] = [
     accessorKey: 'description',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Keterangan" />,
     enableSorting: false
-  },
-  {
-    id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />
   }
+  // {
+  //   id: 'actions',
+  //   cell: ({ row }) => <DataTableRowActions row={row} />
+  // }
 ]
