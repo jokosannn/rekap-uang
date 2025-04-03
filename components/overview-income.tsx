@@ -1,6 +1,6 @@
 'use client'
 
-import { Bar, BarChart, LabelList, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, LabelList, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
 import {
   type ChartConfig,
@@ -16,13 +16,13 @@ const chartData = [
   { month: 'March', income: 2370000 },
   { month: 'April', income: 730000 },
   { month: 'May', income: 1000000 },
-  { month: 'June', income: 2140000 },
-  { month: 'July', income: 1250000 },
-  { month: 'August', income: 2250000 },
-  { month: 'September', income: 2400000 },
-  { month: 'October', income: 2750000 },
-  { month: 'November', income: 2600000 },
-  { month: 'December', income: 1000000 }
+  { month: 'June', income: 2140000 }
+  // { month: 'July', income: 1250000 },
+  // { month: 'August', income: 2250000 },
+  // { month: 'September', income: 2400000 },
+  // { month: 'October', income: 2750000 },
+  // { month: 'November', income: 2600000 },
+  // { month: 'December', income: 1000000 }
 ]
 
 const chartConfig = {
@@ -35,8 +35,8 @@ const chartConfig = {
 export function OverviewIncome() {
   return (
     <ResponsiveContainer width="100%">
-      <ChartContainer config={chartConfig} className="aspect-auto h-[450px] w-full">
-        <BarChart
+      <ChartContainer config={chartConfig} className="aspect-auto h-[350px] w-full">
+        {/* <BarChart
           accessibilityLayer
           data={chartData}
           layout="vertical"
@@ -65,6 +65,18 @@ export function OverviewIncome() {
               formatter={(value: number) => formatNumber(value)}
             />
           </Bar>
+        </BarChart> */}
+        <BarChart accessibilityLayer data={chartData}>
+          <CartesianGrid vertical={false} />
+          <XAxis
+            dataKey="month"
+            tickLine={false}
+            tickMargin={10}
+            axisLine={false}
+            tickFormatter={value => value.slice(0, 3)}
+          />
+          <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+          <Bar dataKey="income" fill="var(--color-income)" radius={8} />
         </BarChart>
       </ChartContainer>
     </ResponsiveContainer>

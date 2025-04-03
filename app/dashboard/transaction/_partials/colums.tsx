@@ -3,6 +3,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
+import { ArrowDown, ArrowUp } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -40,13 +41,6 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: 'date',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Tanggal" />,
-    // cell: ({ row }) => {
-    //   return (
-    //     <span className="truncate font-medium">
-    //       {format(new Date(row.original.date), 'dd MMMM yyyy', { locale: id })}
-    //     </span>
-    //   )
-    // },
     cell: ({ row }) => {
       return <TableCellViewer item={row.original} />
     }
@@ -58,14 +52,17 @@ export const columns: ColumnDef<Transaction>[] = [
       const isIncome = row.original.type === 'Income'
 
       return (
-        <div>
-          <Badge
-            variant={isIncome ? 'default' : 'destructive'}
-            className={cn('px-1.5', { 'bg-green-500': isIncome })}
-          >
-            {row.original.type}
-          </Badge>
-        </div>
+        <Badge
+          variant={isIncome ? 'outline' : 'secondary'}
+          className={cn(
+            'rounded-full',
+            isIncome
+              ? 'border-emerald-200 bg-emerald-50 text-emerald-500 dark:border-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
+              : 'border-rose-200 bg-rose-50 text-rose-500 dark:border-rose-700 dark:bg-rose-950 dark:text-rose-300'
+          )}
+        >
+          {isIncome ? 'Pemasukan' : 'Pengeluaran'}
+        </Badge>
       )
     },
     filterFn: (row, id, value) => {
@@ -76,11 +73,7 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: 'category',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Kategori" />,
-    cell: ({ row }) => (
-      <Badge variant="outline" className="text-muted-foreground">
-        {row.original.category}
-      </Badge>
-    ),
+    cell: ({ row }) => <span>{row.original.category}</span>,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
@@ -97,7 +90,22 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: 'amount',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Nominal" />,
-    cell: ({ row }) => <span>{formatRupiah(Number(row.original.amount))}</span>
+    cell: ({ row }) => {
+      return (
+        <div
+          className={`flex items-center gap-1 ${
+            row.original.type === 'Income' ? 'text-emerald-500' : 'text-rose-500'
+          }`}
+        >
+          <span className="whitespace-nowrap">{formatRupiah(Number(row.original.amount))}</span>
+          {row.original.type === 'Income' ? (
+            <ArrowUp className="size-4" />
+          ) : (
+            <ArrowDown className="size-4" />
+          )}
+        </div>
+      )
+    }
   },
   {
     accessorKey: 'description',

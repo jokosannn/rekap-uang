@@ -36,7 +36,7 @@ export default function TableCellViewer({ item }: { item: z.infer<typeof transac
   return (
     <Drawer direction={isMobile ? 'bottom' : 'right'}>
       <DrawerTrigger asChild>
-        <Button variant="link" className="text-foreground w-fit truncate px-0 text-left">
+        <Button variant="link" className="text-foreground w-fit truncate px-0 text-left font-normal">
           {format(new Date(item.date), 'dd MMMM yyyy', { locale: id })}
         </Button>
       </DrawerTrigger>

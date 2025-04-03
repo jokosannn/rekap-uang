@@ -15,12 +15,15 @@ import {
   IconHelp,
   IconInnerShadowTop,
   IconListDetails,
+  IconMoneybagMinus,
+  IconMoneybagPlus,
   IconReport,
   IconSearch,
   IconSettings,
   IconUsers,
   IconWallet
 } from '@tabler/icons-react'
+import { TrendingUp } from 'lucide-react'
 
 import { NavDocuments } from '@/components/nav-documents'
 import { NavMain } from '@/components/nav-main'
@@ -49,20 +52,30 @@ const data = {
       icon: IconDashboard
     },
     {
+      title: 'Pemasukan',
+      url: '/dashboard/income',
+      icon: IconMoneybagPlus
+    },
+    {
+      title: 'Pengeluaran',
+      url: '/dashboard/expense',
+      icon: IconMoneybagMinus
+    },
+    {
       title: 'Transaksi',
       url: '/dashboard/transaction',
       icon: IconCreditCardPay
-    },
-    {
-      title: 'Tabungan',
-      url: '/dashboard/savings',
-      icon: IconWallet
-    },
-    {
-      title: 'Laporan',
-      url: '/dashboard/reports',
-      icon: IconReport
     }
+    // {
+    //   title: 'Tabungan',
+    //   url: '/dashboard/savings',
+    //   icon: IconWallet
+    // },
+    // {
+    //   title: 'Laporan',
+    //   url: '/dashboard/reports',
+    //   icon: IconReport
+    // }
   ]
   // navClouds: [
   //   {
@@ -156,7 +169,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="h-10 data-[slot=sidebar-menu-button]:!p-1.5">
               <a href="#">
-                <IconInnerShadowTop className="!size-5" />
+                {/* <IconInnerShadowTop className="!size-5" /> */}
+                <TrendingUp className="!size-5" />
                 <span className="text-base font-semibold">Rekap Uang</span>
               </a>
             </SidebarMenuButton>
