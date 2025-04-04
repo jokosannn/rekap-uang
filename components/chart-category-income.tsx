@@ -3,7 +3,7 @@
 import * as React from 'react'
 
 import { TrendingUp } from 'lucide-react'
-import { Bar, BarChart, Label, LabelList, Pie, PieChart, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, LabelList, XAxis, YAxis } from 'recharts'
 
 import {
   Card,
@@ -13,27 +13,20 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent
-} from '@/components/ui/chart'
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 import { formatNumber } from '@/lib/utils'
 
 const chartData = [
-  { kategori: 'gaji', visitors: 1000000, fill: 'var(--color-gaji)' },
-  { kategori: 'sideHustle', visitors: 200000, fill: 'var(--color-sideHustle)' },
-  { kategori: 'bonus', visitors: 50000, fill: 'var(--color-bonus)' },
-  { kategori: 'investasi', visitors: 0, fill: 'var(--color-investasi)' },
-  { kategori: 'lainya', visitors: 100000, fill: 'var(--color-lainya)' }
+  { kategori: 'gaji', total: 1000000, fill: 'var(--color-gaji)' },
+  { kategori: 'sideHustle', total: 200000, fill: 'var(--color-sideHustle)' },
+  { kategori: 'bonus', total: 50000, fill: 'var(--color-bonus)' },
+  { kategori: 'investasi', total: 0, fill: 'var(--color-investasi)' },
+  { kategori: 'lainya', total: 100000, fill: 'var(--color-lainya)' }
 ]
 
 const chartConfig = {
-  visitors: {
-    label: 'Visitors'
+  total: {
+    label: 'Total'
   },
   gaji: {
     label: 'Gaji',
@@ -58,18 +51,14 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function ChartCategoryIncome() {
-  const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0)
-  }, [])
-
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Bar Chart - Mixed</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Pemasukan Bulanan</CardTitle>
+        <CardDescription>Pemasukan berdasarkan sumber bulan ini</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="max-h-[200px] w-full">
+        <ChartContainer config={chartConfig} className="max-h-[250px] w-full">
           <BarChart
             accessibilityLayer
             data={chartData}
@@ -87,11 +76,11 @@ export function ChartCategoryIncome() {
               axisLine={false}
               tickFormatter={value => chartConfig[value as keyof typeof chartConfig]?.label}
             />
-            <XAxis dataKey="visitors" type="number" hide />
+            <XAxis dataKey="total" type="number" hide />
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-            <Bar dataKey="visitors" layout="vertical" radius={5}>
+            <Bar dataKey="total" layout="vertical" radius={5}>
               <LabelList
-                dataKey="visitors"
+                dataKey="total"
                 position="right"
                 offset={8}
                 className="fill-foreground"
@@ -104,10 +93,10 @@ export function ChartCategoryIncome() {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          Naik sebesar 5,2% bulan ini <TrendingUp className="h-4 w-4" />
         </div>
         <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
+          Menampilkan total selama 1 bulan terakhir
         </div>
       </CardFooter>
     </Card>

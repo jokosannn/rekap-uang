@@ -1,17 +1,9 @@
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
-import { ArrowDown, ArrowUp, MoreHorizontal, Search } from 'lucide-react'
+import { ArrowDown, ArrowUp } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
 const transactions = [
@@ -61,22 +53,8 @@ export function TransactionHistory() {
   return (
     <Card>
       <CardHeader>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <CardTitle>Riwayat Transaksi</CardTitle>
-            <CardDescription>Transaksi terbaru Anda</CardDescription>
-          </div>
-          {/* <div className="flex items-center gap-2">
-            <div className="relative w-full sm:w-auto">
-              <Search className="text-muted-foreground absolute top-2.5 left-2.5 h-4 w-4" />
-              <Input
-                type="search"
-                placeholder="Cari transaksi..."
-                className="bg-background w-full appearance-none pl-8 shadow-none sm:w-[200px]"
-              />
-            </div>
-          </div> */}
-        </div>
+        <CardTitle>Riwayat Transaksi</CardTitle>
+        <CardDescription>Transaksi terbaru Anda</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="-mx-6 overflow-x-auto px-6">
@@ -84,10 +62,10 @@ export function TransactionHistory() {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[100px]">Tanggal</TableHead>
-                <TableHead>Deskripsi</TableHead>
-                <TableHead className="hidden sm:table-cell">Kategori</TableHead>
-                <TableHead className="text-right">Jumlah</TableHead>
-                <TableHead className="w-[50px]"></TableHead>
+                <TableHead className="table-cell">Tipe</TableHead>
+                <TableHead className="table-cell">Kategori</TableHead>
+                <TableHead className="table-cell">Jumlah</TableHead>
+                <TableHead>Keterangan</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -97,63 +75,35 @@ export function TransactionHistory() {
                     {format(new Date(transaction.date), 'dd MMMM yyyy', { locale: id })}
                   </TableCell>
                   <TableCell>
-                    {transaction.description}
-                    <div className="mt-1 sm:hidden">
-                      <Badge
-                        variant={transaction.type === 'income' ? 'outline' : 'secondary'}
-                        className={
-                          transaction.type === 'income'
-                            ? 'border-emerald-200 bg-emerald-50 text-emerald-500'
-                            : ''
-                        }
-                      >
-                        {transaction.category}
-                      </Badge>
-                    </div>
-                  </TableCell>
-                  <TableCell className="hidden sm:table-cell">
                     <Badge
                       variant={transaction.type === 'income' ? 'outline' : 'secondary'}
                       className={
                         transaction.type === 'income'
-                          ? 'border-emerald-200 bg-emerald-50 text-emerald-500'
-                          : ''
+                          ? 'border-emerald-200 bg-emerald-50 text-emerald-500 capitalize'
+                          : 'capitalize'
                       }
                     >
-                      {transaction.category}
+                      {transaction.type}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="table-cell">{transaction.category}</TableCell>
+                  <TableCell>
                     <div
-                      className={`flex items-center justify-end gap-1 ${
+                      className={`flex items-center gap-1 ${
                         transaction.type === 'income' ? 'text-emerald-500' : 'text-rose-500'
                       }`}
                     >
+                      <span className="whitespace-nowrap">
+                        Rp {transaction.amount.toLocaleString('id-ID')}
+                      </span>
                       {transaction.type === 'income' ? (
                         <ArrowUp className="h-4 w-4" />
                       ) : (
                         <ArrowDown className="h-4 w-4" />
                       )}
-                      <span className="whitespace-nowrap">
-                        Rp {transaction.amount.toLocaleString('id-ID')}
-                      </span>
                     </div>
                   </TableCell>
-                  {/* <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Hapus</DropdownMenuItem>
-                        <DropdownMenuItem>Lihat Detail</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell> */}
+                  <TableCell>{transaction.description}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
