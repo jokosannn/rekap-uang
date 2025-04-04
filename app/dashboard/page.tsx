@@ -1,11 +1,10 @@
-import { IconInnerShadowTop } from '@tabler/icons-react'
 import { TrendingUp } from 'lucide-react'
 
 import { ChartAreaInteractive } from '@/components/chart-area-interactive'
 import { ChartCategory } from '@/components/chart-category'
+import { ChartCategoryIncome } from '@/components/chart-category-income'
 import { OverviewExpense } from '@/components/overview-expense'
 import { OverviewIncome } from '@/components/overview-income'
-import { RecentTransaction } from '@/components/recent-transaction'
 import { SectionCards } from '@/components/section-cards'
 import { TransactionHistory } from '@/components/transaction-history'
 import {
@@ -35,7 +34,7 @@ export default function Page() {
         <div className="px-4 lg:px-6">
           <ChartAreaInteractive />
 
-          <div className="mt-4 grid flex-1 scroll-mt-20 items-start gap-4 lg:grid-cols-8">
+          {/* <div className="mt-4 grid flex-1 scroll-mt-20 items-start gap-4 lg:grid-cols-8">
             <Card className="lg:col-span-4">
               <CardHeader>
                 <CardTitle>Bar Chart - Horizontal</CardTitle>
@@ -70,45 +69,17 @@ export default function Page() {
                 </div>
               </CardFooter>
             </Card>
-          </div>
+          </div> */}
 
-          <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          <div className="mt-4 grid flex-1 scroll-mt-20 items-start gap-4 lg:grid-cols-2">
             <ChartCategory />
-            <ChartCategory />
-            {/* <Card className="lg:col-span-4">
-              <CardHeader>
-                <CardTitle>Transaksi Terakhir</CardTitle>
-                <CardDescription>5 transaksi bulan ini.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <RecentTransaction />
-              </CardContent>
-            </Card> */}
+            <ChartCategoryIncome />
           </div>
 
           <div className="mt-4">
-            {/* <Card>
-              <CardHeader>
-                <CardTitle>Transaksi Terakhir</CardTitle>
-                <CardDescription>5 transaksi bulan ini.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <RecentTransaction />
-              </CardContent>
-            </Card> */}
             <TransactionHistory />
           </div>
-          {/* <Card className="col-span-3 mt-6">
-            <CardHeader>
-              <CardTitle>Transaksi Terakhir</CardTitle>
-              <CardDescription>5 transaksi bulan ini.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <RecentTransaction />
-            </CardContent>
-          </Card> */}
         </div>
-        {/* <DataTable data={data} /> */}
       </div>
     </div>
   )

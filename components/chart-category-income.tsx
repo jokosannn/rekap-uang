@@ -24,11 +24,10 @@ import {
 import { formatNumber } from '@/lib/utils'
 
 const chartData = [
-  { kategori: 'makanan', visitors: 229540, fill: 'var(--color-makanan)' },
-  { kategori: 'transportasi', visitors: 500000, fill: 'var(--color-transportasi)' },
-  { kategori: 'belanja', visitors: 340000, fill: 'var(--color-belanja)' },
-  { kategori: 'hiburan', visitors: 100, fill: 'var(--color-hiburan)' },
-  { kategori: 'tagihan', visitors: 0, fill: 'var(--color-tagihan)' },
+  { kategori: 'gaji', visitors: 1000000, fill: 'var(--color-gaji)' },
+  { kategori: 'sideHustle', visitors: 200000, fill: 'var(--color-sideHustle)' },
+  { kategori: 'bonus', visitors: 50000, fill: 'var(--color-bonus)' },
+  { kategori: 'investasi', visitors: 0, fill: 'var(--color-investasi)' },
   { kategori: 'lainya', visitors: 100000, fill: 'var(--color-lainya)' }
 ]
 
@@ -36,33 +35,29 @@ const chartConfig = {
   visitors: {
     label: 'Visitors'
   },
-  makanan: {
-    label: 'Makanan',
+  gaji: {
+    label: 'Gaji',
     color: 'hsl(var(--chart-1))'
   },
-  transportasi: {
-    label: 'Transportasi',
+  investasi: {
+    label: 'Investasi',
     color: 'hsl(var(--chart-2))'
   },
-  belanja: {
-    label: 'Belanja',
+  bonus: {
+    label: 'Bonus',
     color: 'hsl(var(--chart-3))'
   },
-  hiburan: {
-    label: 'Hiburan',
+  sideHustle: {
+    label: 'Sampingan',
     color: 'hsl(var(--chart-4))'
-  },
-  tagihan: {
-    label: 'Tagihan',
-    color: 'hsl(var(--chart-5))'
   },
   lainya: {
     label: 'Lainya',
-    color: 'hsl(var(--primary))'
+    color: 'hsl(var(--chart-5))'
   }
 } satisfies ChartConfig
 
-export function ChartCategory() {
+export function ChartCategoryIncome() {
   const totalVisitors = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0)
   }, [])
@@ -74,13 +69,14 @@ export function ChartCategory() {
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="max-h-[250px] w-full">
+        <ChartContainer config={chartConfig} className="max-h-[200px] w-full">
           <BarChart
             accessibilityLayer
             data={chartData}
             layout="vertical"
             margin={{
-              left: 28
+              left: 20,
+              right: 40
             }}
           >
             <YAxis

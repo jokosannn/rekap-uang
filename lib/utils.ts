@@ -6,7 +6,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatNumber(number: number) {
-  if (number >= 1_000_000) {
+  if (number >= 1_000_000_000_000) {
+    return `${parseFloat((number / 1_000_000_000_000).toFixed(2))}T`
+  } else if (number >= 1_000_000_000) {
+    return `${parseFloat((number / 1_000_000_000).toFixed(2))}M`
+  } else if (number >= 1_000_000) {
     return `${parseFloat((number / 1_000_000).toFixed(2))}jt` // Maksimal 2 angka di belakang koma
   } else if (number >= 1_000) {
     return `${parseFloat((number / 1_000).toFixed(1))}k` // Maksimal 1 angka di belakang koma

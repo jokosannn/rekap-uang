@@ -35,7 +35,7 @@ const chartConfig = {
 export function OverviewExpense() {
   return (
     <ResponsiveContainer width="100%">
-      <ChartContainer config={chartConfig} className="aspect-auto h-[350px] w-full">
+      <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full sm:h-[300px]">
         {/* <BarChart
           accessibilityLayer
           data={chartData}
