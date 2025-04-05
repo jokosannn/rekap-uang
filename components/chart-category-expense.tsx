@@ -14,22 +14,24 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
-import { formatNumber } from '@/lib/utils'
+import data from '@/constants/transaction.json'
+import { formatNumber, getMonthlyCategoryTransactions } from '@/lib/utils'
+import { Transaction } from '@/types/transaction'
 
-const chartData = [
-  { kategori: 'makanan', total: 229540, fill: 'var(--color-makanan)' },
-  { kategori: 'transportasi', total: 500000, fill: 'var(--color-transportasi)' },
-  { kategori: 'belanja', total: 340000, fill: 'var(--color-belanja)' },
+const chartDefault = [
+  { kategori: 'jajan', total: 0, fill: 'var(--color-jajan)' },
+  { kategori: 'transportasi', total: 0, fill: 'var(--color-transportasi)' },
+  { kategori: 'belanja', total: 0, fill: 'var(--color-belanja)' },
   { kategori: 'hiburan', total: 0, fill: 'var(--color-hiburan)' },
-  { kategori: 'lainya', total: 100000, fill: 'var(--color-lainya)' }
+  { kategori: 'lainya', total: 0, fill: 'var(--color-lainya)' }
 ]
 
 const chartConfig = {
   total: {
     label: 'Total'
   },
-  makanan: {
-    label: 'Makanan',
+  jajan: {
+    label: 'Jajan',
     color: 'hsl(var(--chart-1))'
   },
   transportasi: {
@@ -51,6 +53,17 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function ChartCategoryExpense() {
+  const summary = getMonthlyCategoryTransactions(data as Transaction[])
+  const chartData = chartDefault.map(tx => {
+    const found = summary.find(s => s.kategori === tx.kategori)
+    return {
+      ...tx,
+      total: found ? found.total : 0
+    }
+  })
+
+  console.log(chartData)
+
   return (
     <Card>
       <CardHeader>
@@ -64,7 +77,8 @@ export function ChartCategoryExpense() {
             data={chartData}
             layout="vertical"
             margin={{
-              left: 28
+              left: 28,
+              right: 32
             }}
           >
             <YAxis

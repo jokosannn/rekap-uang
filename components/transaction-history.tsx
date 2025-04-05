@@ -5,51 +5,13 @@ import { ArrowDown, ArrowUp } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-
-const transactions = [
-  {
-    id: '1',
-    date: '2023-04-01',
-    description: 'Gaji Bulanan',
-    category: 'Pemasukan',
-    amount: 6500000,
-    type: 'income'
-  },
-  {
-    id: '2',
-    date: '2023-04-02',
-    description: 'Belanja Bulanan',
-    category: 'Makanan',
-    amount: 850000,
-    type: 'expense'
-  },
-  {
-    id: '3',
-    date: '2023-04-05',
-    description: 'Bayar Listrik',
-    category: 'Tagihan',
-    amount: 450000,
-    type: 'expense'
-  },
-  {
-    id: '4',
-    date: '2023-04-10',
-    description: 'Proyek Freelance',
-    category: 'Pemasukan',
-    amount: 1200000,
-    type: 'income'
-  },
-  {
-    id: '5',
-    date: '2023-04-15',
-    description: 'Makan di Restoran',
-    category: 'Makanan',
-    amount: 250000,
-    type: 'expense'
-  }
-]
+import data from '@/constants/transaction.json'
+import { cn, getTransactionHistory } from '@/lib/utils'
+import { Transaction } from '@/types/transaction'
 
 export function TransactionHistory() {
+  const transactions = getTransactionHistory(data as Transaction[]).slice(0, 5)
+
   return (
     <Card>
       <CardHeader>
@@ -76,30 +38,31 @@ export function TransactionHistory() {
                   </TableCell>
                   <TableCell>
                     <Badge
-                      variant={transaction.type === 'income' ? 'outline' : 'secondary'}
-                      className={
-                        transaction.type === 'income'
-                          ? 'border-emerald-200 bg-emerald-50 text-emerald-500 capitalize'
-                          : 'capitalize'
-                      }
+                      variant={transaction.type === 'Income' ? 'outline' : 'secondary'}
+                      className={cn(
+                        'rounded-full',
+                        transaction.type === 'Income'
+                          ? 'border-emerald-200 bg-emerald-50 text-emerald-500 dark:border-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
+                          : 'border-rose-200 bg-rose-50 text-rose-500 dark:border-rose-700 dark:bg-rose-950 dark:text-rose-300'
+                      )}
                     >
-                      {transaction.type}
+                      {transaction.type === 'Income' ? 'Pemasukan' : 'Pengeluaran'}
                     </Badge>
                   </TableCell>
                   <TableCell className="table-cell">{transaction.category}</TableCell>
                   <TableCell>
                     <div
                       className={`flex items-center gap-1 ${
-                        transaction.type === 'income' ? 'text-emerald-500' : 'text-rose-500'
+                        transaction.type === 'Income' ? 'text-emerald-500' : 'text-rose-500'
                       }`}
                     >
                       <span className="whitespace-nowrap">
                         Rp {transaction.amount.toLocaleString('id-ID')}
                       </span>
-                      {transaction.type === 'income' ? (
-                        <ArrowUp className="h-4 w-4" />
-                      ) : (
+                      {transaction.type === 'Income' ? (
                         <ArrowDown className="h-4 w-4" />
+                      ) : (
+                        <ArrowUp className="h-4 w-4" />
                       )}
                     </div>
                   </TableCell>

@@ -53,17 +53,6 @@ export function getMonthlyComparison(transactions: any[]) {
     const year = txDate.getFullYear()
     const amount = tx.amount
 
-    // // Hitung bulan sekarang
-    // if (month === currentMonth && year === currentYear) {
-    //   if (tx.type === 'Income') {
-    //     summary.current.income.transactionCount++
-    //     summary.current.income.value += amount
-    //   } else if (tx.type === 'Expense') {
-    //     summary.current.expense.transactionCount++
-    //     summary.current.expense.value += amount
-    //   }
-    // }
-
     // Hitung bulan sebelumnya
     if (month === previousMonth && year === previousYear) {
       if (tx.type === 'Income') summary.previous.income += amount
@@ -77,20 +66,7 @@ export function getMonthlyComparison(transactions: any[]) {
     summary.current.income.value += tx.income
     summary.current.expense.transactionCount++
     summary.current.expense.value += tx.expense
-    // if (tx.income) {
-    // } else if (tx.expense) {
-    // }
   })
-
-  // if (month === currentMonth && year === currentYear) {
-  //   if (tx.type === 'Income') {
-  //     summary.current.income.transactionCount++
-  //     summary.current.income.value += amount
-  //   } else if (tx.type === 'Expense') {
-  //     summary.current.expense.transactionCount++
-  //     summary.current.expense.value += amount
-  //   }
-  // }
 
   // Hitung persentase perubahan Income dan Expense
   const calcPercentage = (current: number, previous: number): number => {
@@ -139,4 +115,96 @@ export function filterCurrentMonthTransactions(transactions: Transaction[]) {
   })
 
   return Object.values(transactionMap).sort((a, b) => a.date.localeCompare(b.date))
+}
+
+export function getMonthlyCategoryTransactions(transactions: Transaction[]) {
+  const now = new Date()
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+
+  const transactionMap: Record<string, { kategori: string; total: number; fill: string }> = {}
+
+  transactions.forEach(tx => {
+    const txDate = new Date(tx.date)
+    if (txDate >= startOfMonth && txDate <= now) {
+      if (tx.type === 'Income') {
+        const formattedDate = tx.category
+
+        if (!transactionMap[formattedDate]) {
+          transactionMap[formattedDate] = {
+            kategori: tx.category,
+            total: 0,
+            fill: `var(--color-${tx.category.toLowerCase()})`
+          }
+        }
+
+        switch (tx.category) {
+          case 'Gaji':
+            transactionMap[formattedDate].kategori = 'gaji'
+            transactionMap[formattedDate].total += tx.amount
+            break
+          case 'Sampingan':
+            transactionMap[formattedDate].kategori = 'sampingan'
+            transactionMap[formattedDate].total += tx.amount
+            break
+          case 'Bonus':
+            transactionMap[formattedDate].kategori = 'bonus'
+            transactionMap[formattedDate].total += tx.amount
+            break
+          case 'Investasi':
+            transactionMap[formattedDate].kategori = 'investasi'
+            transactionMap[formattedDate].total += tx.amount
+            break
+          case 'Lainya':
+            transactionMap[formattedDate].kategori = 'lainya'
+            transactionMap[formattedDate].total += tx.amount
+            break
+        }
+      } else {
+        const formattedDate = tx.category
+
+        if (!transactionMap[formattedDate]) {
+          transactionMap[formattedDate] = {
+            kategori: tx.category,
+            total: 0,
+            fill: `var(--color-${tx.category.toLowerCase()})`
+          }
+        }
+
+        switch (tx.category) {
+          case 'Jajan':
+            transactionMap[formattedDate].kategori = 'jajan'
+            transactionMap[formattedDate].total += tx.amount
+            break
+          case 'Transportasi':
+            transactionMap[formattedDate].kategori = 'transportasi'
+            transactionMap[formattedDate].total += tx.amount
+            break
+          case 'Belanja':
+            transactionMap[formattedDate].kategori = 'belanja'
+            transactionMap[formattedDate].total += tx.amount
+            break
+          case 'Hiburan':
+            transactionMap[formattedDate].kategori = 'hiburan'
+            transactionMap[formattedDate].total += tx.amount
+            break
+          case 'Lainya':
+            transactionMap[formattedDate].kategori = 'lainya'
+            transactionMap[formattedDate].total += tx.amount
+            break
+        }
+      }
+    }
+  })
+
+  return Object.values(transactionMap)
+}
+
+export function getTransactionHistory(transactions: Transaction[]) {
+  const now = new Date()
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+
+  return transactions.filter(tx => {
+    const txDate = new Date(tx.date)
+    return txDate >= startOfMonth && txDate <= now
+  })
 }

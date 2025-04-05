@@ -9,7 +9,6 @@ import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '
 import data from '@/constants/transaction.json'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { filterCurrentMonthTransactions, formatNumber } from '@/lib/utils'
-import { Summary } from '@/types/summary'
 import { Transaction } from '@/types/transaction'
 
 export const description = 'An interactive area chart'
@@ -60,11 +59,7 @@ const chartConfig = {
   }
 } satisfies ChartConfig
 
-type IProps = {
-  data: Summary
-}
-
-export function ChartTotalTransaction({ data }: IProps) {
+export function ChartTotalTransaction() {
   const isMobile = useIsMobile()
   const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig | 'all'>('all')
 

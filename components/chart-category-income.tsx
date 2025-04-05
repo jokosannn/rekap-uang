@@ -14,14 +14,16 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
-import { formatNumber } from '@/lib/utils'
+import data from '@/constants/transaction.json'
+import { formatNumber, getMonthlyCategoryTransactions } from '@/lib/utils'
+import { Transaction } from '@/types/transaction'
 
-const chartData = [
-  { kategori: 'gaji', total: 1000000, fill: 'var(--color-gaji)' },
-  { kategori: 'sideHustle', total: 200000, fill: 'var(--color-sideHustle)' },
-  { kategori: 'bonus', total: 50000, fill: 'var(--color-bonus)' },
+const chartDefault = [
+  { kategori: 'gaji', total: 0, fill: 'var(--color-gaji)' },
+  { kategori: 'sampingan', total: 0, fill: 'var(--color-sampingan)' },
+  { kategori: 'bonus', total: 0, fill: 'var(--color-bonus)' },
   { kategori: 'investasi', total: 0, fill: 'var(--color-investasi)' },
-  { kategori: 'lainya', total: 100000, fill: 'var(--color-lainya)' }
+  { kategori: 'lainya', total: 0, fill: 'var(--color-lainya)' }
 ]
 
 const chartConfig = {
@@ -40,7 +42,7 @@ const chartConfig = {
     label: 'Bonus',
     color: 'hsl(var(--chart-3))'
   },
-  sideHustle: {
+  sampingan: {
     label: 'Sampingan',
     color: 'hsl(var(--chart-4))'
   },
@@ -51,6 +53,15 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function ChartCategoryIncome() {
+  const summary = getMonthlyCategoryTransactions(data as Transaction[])
+  const chartData = chartDefault.map(tx => {
+    const found = summary.find(s => s.kategori === tx.kategori)
+    return {
+      ...tx,
+      total: found ? found.total : 0
+    }
+  })
+
   return (
     <Card>
       <CardHeader>

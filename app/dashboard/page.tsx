@@ -27,7 +27,7 @@ export default function Page() {
         <SectionCards data={summary} />
 
         <div className="px-4 lg:px-6">
-          <ChartTotalTransaction data={summary} />
+          <ChartTotalTransaction />
 
           <div className="mt-4 grid flex-1 scroll-mt-20 items-start gap-4 lg:grid-cols-2">
             <ChartCategoryExpense />
