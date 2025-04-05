@@ -8,7 +8,8 @@ export const transactionSchema = z.object({
   type: z.string(),
   category: z.string(),
   paymentMethod: z.string(),
-  amount: z.string(),
+  amount: z.number(),
   description: z.string()
 })
+
 export type Transaction = z.infer<typeof transactionSchema>

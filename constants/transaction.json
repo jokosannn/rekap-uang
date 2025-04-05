@@ -1,0 +1,1730 @@
+[
+  {
+    "id": 1,
+    "date": "2024-01-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "Mandiri",
+    "amount": 1000000,
+    "description": "Gaji bulan January"
+  },
+  {
+    "id": 2,
+    "date": "2024-01-19T04:34:00Z",
+    "type": "Expense",
+    "category": "Lainnya",
+    "paymentMethod": "BNI",
+    "amount": 113705,
+    "description": "Pengeluaran untuk lainnya"
+  },
+  {
+    "id": 3,
+    "date": "2024-01-17T15:04:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "BCA",
+    "amount": 237727,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 4,
+    "date": "2024-01-21T13:01:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "BNI",
+    "amount": 20000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 5,
+    "date": "2024-01-09T21:34:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BNI",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 6,
+    "date": "2024-01-27T04:57:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "BNI",
+    "amount": 245569,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 7,
+    "date": "2024-01-07T19:22:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "ShopeePay",
+    "amount": 222784,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 8,
+    "date": "2024-01-26T12:49:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "OVO",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 9,
+    "date": "2024-01-11T23:29:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BNI",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 10,
+    "date": "2024-01-27T15:09:00Z",
+    "type": "Expense",
+    "category": "Lainnya",
+    "paymentMethod": "OVO",
+    "amount": 198322,
+    "description": "Pengeluaran untuk lainnya"
+  },
+  {
+    "id": 11,
+    "date": "2024-02-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "BCA",
+    "amount": 1000000,
+    "description": "Gaji bulan February"
+  },
+  {
+    "id": 12,
+    "date": "2024-02-18T10:36:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "Mandiri",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 13,
+    "date": "2024-02-05T05:49:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "BCA",
+    "amount": 160039,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 14,
+    "date": "2024-02-25T23:31:00Z",
+    "type": "Expense",
+    "category": "Hiburan",
+    "paymentMethod": "Gopay",
+    "amount": 14724,
+    "description": "Pengeluaran untuk hiburan"
+  },
+  {
+    "id": 15,
+    "date": "2024-02-24T05:09:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "Cash",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 16,
+    "date": "2024-02-23T07:51:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "Gopay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 17,
+    "date": "2024-02-24T00:51:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "BNI",
+    "amount": 707102,
+    "description": "Bonus bulan February"
+  },
+  {
+    "id": 18,
+    "date": "2024-02-23T14:54:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "ShopeePay",
+    "amount": 744393,
+    "description": "Sampingan bulan February"
+  },
+  {
+    "id": 19,
+    "date": "2024-02-18T13:27:00Z",
+    "type": "Expense",
+    "category": "Lainnya",
+    "paymentMethod": "Cash",
+    "amount": 187475,
+    "description": "Pengeluaran untuk lainnya"
+  },
+  {
+    "id": 20,
+    "date": "2024-02-24T04:45:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "Cash",
+    "amount": 168609,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 21,
+    "date": "2024-02-18T23:14:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "Gopay",
+    "amount": 1515857,
+    "description": "Lainnya bulan February"
+  },
+  {
+    "id": 22,
+    "date": "2024-02-15T03:59:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "Cash",
+    "amount": 1253355,
+    "description": "Bonus bulan February"
+  },
+  {
+    "id": 23,
+    "date": "2024-02-02T03:31:00Z",
+    "type": "Expense",
+    "category": "Lainnya",
+    "paymentMethod": "Mandiri",
+    "amount": 123717,
+    "description": "Pengeluaran untuk lainnya"
+  },
+  {
+    "id": 24,
+    "date": "2024-02-07T23:51:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 25,
+    "date": "2024-02-08T13:31:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "Cash",
+    "amount": 1651948,
+    "description": "Sampingan bulan February"
+  },
+  {
+    "id": 26,
+    "date": "2024-03-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "Mandiri",
+    "amount": 1000000,
+    "description": "Gaji bulan March"
+  },
+  {
+    "id": 27,
+    "date": "2024-03-06T18:19:00Z",
+    "type": "Expense",
+    "category": "Lainnya",
+    "paymentMethod": "Mandiri",
+    "amount": 238500,
+    "description": "Pengeluaran untuk lainnya"
+  },
+  {
+    "id": 28,
+    "date": "2024-03-17T04:02:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 29,
+    "date": "2024-03-07T04:54:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "ShopeePay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 30,
+    "date": "2024-03-19T02:03:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "BNI",
+    "amount": 676421,
+    "description": "Sampingan bulan March"
+  },
+  {
+    "id": 31,
+    "date": "2024-03-14T22:39:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "BNI",
+    "amount": 193568,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 32,
+    "date": "2024-03-07T19:09:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "ShopeePay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 33,
+    "date": "2024-03-18T07:03:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "Gopay",
+    "amount": 1736255,
+    "description": "Lainnya bulan March"
+  },
+  {
+    "id": 34,
+    "date": "2024-03-21T08:20:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "OVO",
+    "amount": 20000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 35,
+    "date": "2024-03-05T06:50:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "ShopeePay",
+    "amount": 1684370,
+    "description": "Sampingan bulan March"
+  },
+  {
+    "id": 36,
+    "date": "2024-03-03T21:38:00Z",
+    "type": "Expense",
+    "category": "Lainnya",
+    "paymentMethod": "Gopay",
+    "amount": 279781,
+    "description": "Pengeluaran untuk lainnya"
+  },
+  {
+    "id": 37,
+    "date": "2024-03-22T16:17:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "ShopeePay",
+    "amount": 248525,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 38,
+    "date": "2024-04-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "ShopeePay",
+    "amount": 1000000,
+    "description": "Gaji bulan April"
+  },
+  {
+    "id": 39,
+    "date": "2024-04-15T11:56:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 40,
+    "date": "2024-04-11T03:16:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "Cash",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 41,
+    "date": "2024-04-10T00:29:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "OVO",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 42,
+    "date": "2024-04-03T18:46:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "BCA",
+    "amount": 1334932,
+    "description": "Lainnya bulan April"
+  },
+  {
+    "id": 43,
+    "date": "2024-04-18T03:05:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "BNI",
+    "amount": 233267,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 44,
+    "date": "2024-04-24T20:42:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "Gopay",
+    "amount": 667779,
+    "description": "Sampingan bulan April"
+  },
+  {
+    "id": 45,
+    "date": "2024-04-08T19:33:00Z",
+    "type": "Expense",
+    "category": "Hiburan",
+    "paymentMethod": "OVO",
+    "amount": 140134,
+    "description": "Pengeluaran untuk hiburan"
+  },
+  {
+    "id": 46,
+    "date": "2024-04-08T10:26:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "BNI",
+    "amount": 208627,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 47,
+    "date": "2024-05-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "ShopeePay",
+    "amount": 1000000,
+    "description": "Gaji bulan May"
+  },
+  {
+    "id": 48,
+    "date": "2024-05-08T13:13:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 49,
+    "date": "2024-05-09T12:48:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "Cash",
+    "amount": 1532350,
+    "description": "Bonus bulan May"
+  },
+  {
+    "id": 50,
+    "date": "2024-05-01T20:34:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "BNI",
+    "amount": 1285907,
+    "description": "Bonus bulan May"
+  },
+  {
+    "id": 51,
+    "date": "2024-05-18T13:21:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "BCA",
+    "amount": 1754969,
+    "description": "Lainnya bulan May"
+  },
+  {
+    "id": 52,
+    "date": "2024-05-17T10:43:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "BNI",
+    "amount": 1149882,
+    "description": "Sampingan bulan May"
+  },
+  {
+    "id": 53,
+    "date": "2024-05-28T11:45:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "ShopeePay",
+    "amount": 801723,
+    "description": "Lainnya bulan May"
+  },
+  {
+    "id": 54,
+    "date": "2024-05-24T17:36:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 55,
+    "date": "2024-05-15T07:11:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "OVO",
+    "amount": 239038,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 56,
+    "date": "2024-05-11T17:24:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "Cash",
+    "amount": 292968,
+    "description": "Sampingan bulan May"
+  },
+  {
+    "id": 57,
+    "date": "2024-06-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "BNI",
+    "amount": 1000000,
+    "description": "Gaji bulan June"
+  },
+  {
+    "id": 58,
+    "date": "2024-06-01T08:14:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "BNI",
+    "amount": 509530,
+    "description": "Sampingan bulan June"
+  },
+  {
+    "id": 59,
+    "date": "2024-06-07T02:06:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "Cash",
+    "amount": 1293013,
+    "description": "Lainnya bulan June"
+  },
+  {
+    "id": 60,
+    "date": "2024-06-27T00:46:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "Gopay",
+    "amount": 696893,
+    "description": "Bonus bulan June"
+  },
+  {
+    "id": 61,
+    "date": "2024-06-05T15:26:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "BCA",
+    "amount": 821686,
+    "description": "Lainnya bulan June"
+  },
+  {
+    "id": 62,
+    "date": "2024-06-03T08:35:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "Cash",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 63,
+    "date": "2024-06-01T13:06:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "Cash",
+    "amount": 1376127,
+    "description": "Sampingan bulan June"
+  },
+  {
+    "id": 64,
+    "date": "2024-06-16T15:31:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "OVO",
+    "amount": 432160,
+    "description": "Lainnya bulan June"
+  },
+  {
+    "id": 65,
+    "date": "2024-06-22T21:33:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 66,
+    "date": "2024-06-14T23:01:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "Mandiri",
+    "amount": 20000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 67,
+    "date": "2024-06-22T03:55:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "BCA",
+    "amount": 216510,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 68,
+    "date": "2024-07-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "Gopay",
+    "amount": 1000000,
+    "description": "Gaji bulan July"
+  },
+  {
+    "id": 69,
+    "date": "2024-07-21T18:19:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 70,
+    "date": "2024-07-09T12:56:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "OVO",
+    "amount": 639249,
+    "description": "Bonus bulan July"
+  },
+  {
+    "id": 71,
+    "date": "2024-07-03T14:22:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 72,
+    "date": "2024-07-15T16:08:00Z",
+    "type": "Expense",
+    "category": "Lainnya",
+    "paymentMethod": "BNI",
+    "amount": 84020,
+    "description": "Pengeluaran untuk lainnya"
+  },
+  {
+    "id": 73,
+    "date": "2024-07-20T16:22:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "Cash",
+    "amount": 20000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 74,
+    "date": "2024-07-06T09:24:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 75,
+    "date": "2024-07-20T18:05:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "BNI",
+    "amount": 1936926,
+    "description": "Sampingan bulan July"
+  },
+  {
+    "id": 76,
+    "date": "2024-07-23T05:31:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BNI",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 77,
+    "date": "2024-07-13T12:36:00Z",
+    "type": "Expense",
+    "category": "Hiburan",
+    "paymentMethod": "OVO",
+    "amount": 43507,
+    "description": "Pengeluaran untuk hiburan"
+  },
+  {
+    "id": 78,
+    "date": "2024-07-21T19:34:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "BCA",
+    "amount": 1077672,
+    "description": "Lainnya bulan July"
+  },
+  {
+    "id": 79,
+    "date": "2024-07-13T19:21:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "BNI",
+    "amount": 50000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 80,
+    "date": "2024-07-14T09:10:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "Mandiri",
+    "amount": 627429,
+    "description": "Bonus bulan July"
+  },
+  {
+    "id": 81,
+    "date": "2024-07-06T08:16:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "BCA",
+    "amount": 1515308,
+    "description": "Bonus bulan July"
+  },
+  {
+    "id": 82,
+    "date": "2024-08-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "BCA",
+    "amount": 1000000,
+    "description": "Gaji bulan August"
+  },
+  {
+    "id": 83,
+    "date": "2024-08-14T15:49:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "Mandiri",
+    "amount": 311418,
+    "description": "Sampingan bulan August"
+  },
+  {
+    "id": 84,
+    "date": "2024-08-06T09:33:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "Gopay",
+    "amount": 562260,
+    "description": "Bonus bulan August"
+  },
+  {
+    "id": 85,
+    "date": "2024-08-28T18:13:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "ShopeePay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 86,
+    "date": "2024-08-03T19:22:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "OVO",
+    "amount": 1219431,
+    "description": "Sampingan bulan August"
+  },
+  {
+    "id": 87,
+    "date": "2024-08-10T11:39:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 88,
+    "date": "2024-08-02T04:18:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "ShopeePay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 89,
+    "date": "2024-08-22T07:44:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "ShopeePay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 90,
+    "date": "2024-08-10T10:00:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "Cash",
+    "amount": 1285165,
+    "description": "Lainnya bulan August"
+  },
+  {
+    "id": 91,
+    "date": "2024-08-19T05:37:00Z",
+    "type": "Expense",
+    "category": "Hiburan",
+    "paymentMethod": "ShopeePay",
+    "amount": 245636,
+    "description": "Pengeluaran untuk hiburan"
+  },
+  {
+    "id": 92,
+    "date": "2024-09-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "ShopeePay",
+    "amount": 1000000,
+    "description": "Gaji bulan September"
+  },
+  {
+    "id": 93,
+    "date": "2024-09-05T05:33:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "Cash",
+    "amount": 20000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 94,
+    "date": "2024-09-24T20:04:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "Gopay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 95,
+    "date": "2024-09-03T15:08:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "Cash",
+    "amount": 20000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 96,
+    "date": "2024-09-08T00:15:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "Cash",
+    "amount": 20000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 97,
+    "date": "2024-09-23T08:48:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "Gopay",
+    "amount": 558859,
+    "description": "Lainnya bulan September"
+  },
+  {
+    "id": 98,
+    "date": "2024-09-04T12:56:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "OVO",
+    "amount": 265348,
+    "description": "Sampingan bulan September"
+  },
+  {
+    "id": 99,
+    "date": "2024-09-10T14:51:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "BCA",
+    "amount": 215585,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 100,
+    "date": "2024-09-26T16:36:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "BCA",
+    "amount": 20000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 101,
+    "date": "2024-09-19T09:19:00Z",
+    "type": "Expense",
+    "category": "Lainnya",
+    "paymentMethod": "Mandiri",
+    "amount": 188991,
+    "description": "Pengeluaran untuk lainnya"
+  },
+  {
+    "id": 102,
+    "date": "2024-10-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "BNI",
+    "amount": 1000000,
+    "description": "Gaji bulan October"
+  },
+  {
+    "id": 103,
+    "date": "2024-10-28T21:28:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "Gopay",
+    "amount": 1195210,
+    "description": "Lainnya bulan October"
+  },
+  {
+    "id": 104,
+    "date": "2024-10-09T08:00:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "ShopeePay",
+    "amount": 209877,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 105,
+    "date": "2024-10-22T07:27:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "BNI",
+    "amount": 1150788,
+    "description": "Bonus bulan October"
+  },
+  {
+    "id": 106,
+    "date": "2024-10-08T14:23:00Z",
+    "type": "Expense",
+    "category": "Hiburan",
+    "paymentMethod": "ShopeePay",
+    "amount": 222427,
+    "description": "Pengeluaran untuk hiburan"
+  },
+  {
+    "id": 107,
+    "date": "2024-10-01T17:38:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "Gopay",
+    "amount": 229162,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 108,
+    "date": "2024-10-15T17:21:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "Mandiri",
+    "amount": 185376,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 109,
+    "date": "2024-10-23T08:26:00Z",
+    "type": "Expense",
+    "category": "Hiburan",
+    "paymentMethod": "BNI",
+    "amount": 17781,
+    "description": "Pengeluaran untuk hiburan"
+  },
+  {
+    "id": 110,
+    "date": "2024-10-02T23:12:00Z",
+    "type": "Expense",
+    "category": "Hiburan",
+    "paymentMethod": "BNI",
+    "amount": 165216,
+    "description": "Pengeluaran untuk hiburan"
+  },
+  {
+    "id": 111,
+    "date": "2024-11-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "BNI",
+    "amount": 1000000,
+    "description": "Gaji bulan November"
+  },
+  {
+    "id": 112,
+    "date": "2024-11-05T16:06:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "BNI",
+    "amount": 248487,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 113,
+    "date": "2024-11-23T09:12:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "BNI",
+    "amount": 20000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 114,
+    "date": "2024-11-11T10:38:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "BNI",
+    "amount": 20000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 115,
+    "date": "2024-11-08T05:17:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "Mandiri",
+    "amount": 20000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 116,
+    "date": "2024-11-04T09:21:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "BCA",
+    "amount": 553708,
+    "description": "Sampingan bulan November"
+  },
+  {
+    "id": 117,
+    "date": "2024-11-24T18:00:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "OVO",
+    "amount": 749710,
+    "description": "Sampingan bulan November"
+  },
+  {
+    "id": 118,
+    "date": "2024-11-25T02:07:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "Cash",
+    "amount": 1217089,
+    "description": "Lainnya bulan November"
+  },
+  {
+    "id": 119,
+    "date": "2024-11-24T07:06:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "BNI",
+    "amount": 1507166,
+    "description": "Lainnya bulan November"
+  },
+  {
+    "id": 120,
+    "date": "2024-11-19T23:10:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "BCA",
+    "amount": 1097860,
+    "description": "Sampingan bulan November"
+  },
+  {
+    "id": 121,
+    "date": "2024-11-11T18:58:00Z",
+    "type": "Expense",
+    "category": "Lainnya",
+    "paymentMethod": "BNI",
+    "amount": 249394,
+    "description": "Pengeluaran untuk lainnya"
+  },
+  {
+    "id": 122,
+    "date": "2024-11-05T06:19:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "ShopeePay",
+    "amount": 796300,
+    "description": "Lainnya bulan November"
+  },
+  {
+    "id": 123,
+    "date": "2024-11-25T12:42:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "Gopay",
+    "amount": 1786640,
+    "description": "Lainnya bulan November"
+  },
+  {
+    "id": 124,
+    "date": "2024-12-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "ShopeePay",
+    "amount": 1000000,
+    "description": "Gaji bulan December"
+  },
+  {
+    "id": 125,
+    "date": "2024-12-12T16:25:00Z",
+    "type": "Expense",
+    "category": "Lainnya",
+    "paymentMethod": "Mandiri",
+    "amount": 122506,
+    "description": "Pengeluaran untuk lainnya"
+  },
+  {
+    "id": 126,
+    "date": "2024-12-09T06:54:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BNI",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 127,
+    "date": "2024-12-05T01:12:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "BCA",
+    "amount": 584124,
+    "description": "Lainnya bulan December"
+  },
+  {
+    "id": 128,
+    "date": "2024-12-10T10:12:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "Gopay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 129,
+    "date": "2024-12-15T18:03:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "BCA",
+    "amount": 271076,
+    "description": "Bonus bulan December"
+  },
+  {
+    "id": 130,
+    "date": "2024-12-19T12:33:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "Mandiri",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 131,
+    "date": "2024-12-02T08:45:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "BCA",
+    "amount": 1805942,
+    "description": "Lainnya bulan December"
+  },
+  {
+    "id": 132,
+    "date": "2024-12-22T23:53:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "Mandiri",
+    "amount": 211953,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 133,
+    "date": "2024-12-17T11:36:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "Gopay",
+    "amount": 224449,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 134,
+    "date": "2024-12-20T03:19:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "Mandiri",
+    "amount": 50000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 135,
+    "date": "2024-12-03T02:16:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "BCA",
+    "amount": 1063799,
+    "description": "Bonus bulan December"
+  },
+  {
+    "id": 136,
+    "date": "2025-01-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "OVO",
+    "amount": 1000000,
+    "description": "Gaji bulan January"
+  },
+  {
+    "id": 137,
+    "date": "2025-01-13T13:32:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "Gopay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 138,
+    "date": "2025-01-25T05:57:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "BCA",
+    "amount": 620180,
+    "description": "Bonus bulan January"
+  },
+  {
+    "id": 139,
+    "date": "2025-01-23T14:41:00Z",
+    "type": "Expense",
+    "category": "Hiburan",
+    "paymentMethod": "Cash",
+    "amount": 200776,
+    "description": "Pengeluaran untuk hiburan"
+  },
+  {
+    "id": 140,
+    "date": "2025-01-05T15:56:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "OVO",
+    "amount": 1409661,
+    "description": "Bonus bulan January"
+  },
+  {
+    "id": 141,
+    "date": "2025-01-23T19:26:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 142,
+    "date": "2025-01-13T19:20:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "Mandiri",
+    "amount": 156067,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 143,
+    "date": "2025-01-15T15:06:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "Gopay",
+    "amount": 840692,
+    "description": "Bonus bulan January"
+  },
+  {
+    "id": 144,
+    "date": "2025-01-24T12:50:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "BNI",
+    "amount": 152385,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 145,
+    "date": "2025-01-17T12:38:00Z",
+    "type": "Expense",
+    "category": "Hiburan",
+    "paymentMethod": "Cash",
+    "amount": 99116,
+    "description": "Pengeluaran untuk hiburan"
+  },
+  {
+    "id": 146,
+    "date": "2025-01-02T05:53:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "Cash",
+    "amount": 150677,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 147,
+    "date": "2025-01-18T11:38:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "Mandiri",
+    "amount": 1102201,
+    "description": "Bonus bulan January"
+  },
+  {
+    "id": 148,
+    "date": "2025-01-08T17:40:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "BNI",
+    "amount": 827865,
+    "description": "Lainnya bulan January"
+  },
+  {
+    "id": 149,
+    "date": "2025-01-25T19:35:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "Mandiri",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 150,
+    "date": "2025-02-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "BNI",
+    "amount": 1000000,
+    "description": "Gaji bulan February"
+  },
+  {
+    "id": 151,
+    "date": "2025-02-26T19:21:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "Gopay",
+    "amount": 1653407,
+    "description": "Sampingan bulan February"
+  },
+  {
+    "id": 152,
+    "date": "2025-02-18T05:46:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "OVO",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 153,
+    "date": "2025-02-19T05:47:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "BCA",
+    "amount": 227688,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 154,
+    "date": "2025-02-03T03:35:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "BNI",
+    "amount": 615243,
+    "description": "Sampingan bulan February"
+  },
+  {
+    "id": 155,
+    "date": "2025-02-02T21:46:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "BCA",
+    "amount": 1532353,
+    "description": "Lainnya bulan February"
+  },
+  {
+    "id": 156,
+    "date": "2025-02-10T22:25:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "BNI",
+    "amount": 20000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 157,
+    "date": "2025-02-14T10:22:00Z",
+    "type": "Expense",
+    "category": "Lainnya",
+    "paymentMethod": "Gopay",
+    "amount": 67158,
+    "description": "Pengeluaran untuk lainnya"
+  },
+  {
+    "id": 158,
+    "date": "2025-02-08T01:40:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "BNI",
+    "amount": 1541583,
+    "description": "Sampingan bulan February"
+  },
+  {
+    "id": 159,
+    "date": "2025-02-24T12:21:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "BNI",
+    "amount": 1014464,
+    "description": "Bonus bulan February"
+  },
+  {
+    "id": 160,
+    "date": "2025-02-07T03:55:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "BCA",
+    "amount": 180612,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 161,
+    "date": "2025-02-24T06:55:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "Mandiri",
+    "amount": 1970030,
+    "description": "Bonus bulan February"
+  },
+  {
+    "id": 162,
+    "date": "2025-02-13T04:03:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "Cash",
+    "amount": 939676,
+    "description": "Lainnya bulan February"
+  },
+  {
+    "id": 163,
+    "date": "2025-02-28T11:46:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "OVO",
+    "amount": 800876,
+    "description": "Bonus bulan February"
+  },
+  {
+    "id": 164,
+    "date": "2025-03-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "Cash",
+    "amount": 1000000,
+    "description": "Gaji bulan March"
+  },
+  {
+    "id": 165,
+    "date": "2025-03-27T14:08:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "ShopeePay",
+    "amount": 1744678,
+    "description": "Bonus bulan March"
+  },
+  {
+    "id": 166,
+    "date": "2025-03-15T16:22:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "ShopeePay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 167,
+    "date": "2025-03-17T15:36:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "ShopeePay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 168,
+    "date": "2025-03-13T14:59:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "Cash",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 169,
+    "date": "2025-03-07T00:45:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 170,
+    "date": "2025-03-19T15:54:00Z",
+    "type": "Expense",
+    "category": "Lainnya",
+    "paymentMethod": "BCA",
+    "amount": 283067,
+    "description": "Pengeluaran untuk lainnya"
+  },
+  {
+    "id": 171,
+    "date": "2025-03-28T18:56:00Z",
+    "type": "Expense",
+    "category": "Lainnya",
+    "paymentMethod": "ShopeePay",
+    "amount": 55328,
+    "description": "Pengeluaran untuk lainnya"
+  },
+  {
+    "id": 172,
+    "date": "2025-03-13T01:44:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "BCA",
+    "amount": 1922867,
+    "description": "Sampingan bulan March"
+  },
+  {
+    "id": 173,
+    "date": "2025-03-27T11:17:00Z",
+    "type": "Expense",
+    "category": "Makanan",
+    "paymentMethod": "ShopeePay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk makanan"
+  },
+  {
+    "id": 174,
+    "date": "2025-03-19T17:16:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "Cash",
+    "amount": 1120332,
+    "description": "Lainnya bulan March"
+  },
+  {
+    "id": 175,
+    "date": "2025-03-11T10:23:00Z",
+    "type": "Income",
+    "category": "Lainnya",
+    "paymentMethod": "BCA",
+    "amount": 838564,
+    "description": "Lainnya bulan March"
+  },
+  {
+    "id": 176,
+    "date": "2025-03-27T02:39:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 177,
+    "date": "2025-03-06T00:32:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "ShopeePay",
+    "amount": 240109,
+    "description": "Bonus bulan March"
+  },
+  {
+    "id": 178,
+    "date": "2025-04-05T08:30:00Z",
+    "type": "Income",
+    "category": "Gaji",
+    "paymentMethod": "BNI",
+    "amount": 1000000,
+    "description": "Gaji bulan April"
+  },
+  {
+    "id": 179,
+    "date": "2025-04-25T08:26:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "Cash",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 180,
+    "date": "2025-04-22T21:29:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "BCA",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 181,
+    "date": "2025-04-27T16:59:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "Gopay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 182,
+    "date": "2025-04-23T17:49:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "Mandiri",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 183,
+    "date": "2025-04-13T05:34:00Z",
+    "type": "Expense",
+    "category": "Hiburan",
+    "paymentMethod": "BNI",
+    "amount": 104949,
+    "description": "Pengeluaran untuk hiburan"
+  },
+  {
+    "id": 184,
+    "date": "2025-04-26T15:51:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "Cash",
+    "amount": 1437620,
+    "description": "Bonus bulan April"
+  },
+  {
+    "id": 185,
+    "date": "2025-04-13T12:28:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "ShopeePay",
+    "amount": 239218,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 186,
+    "date": "2025-04-05T17:05:00Z",
+    "type": "Income",
+    "category": "Sampingan",
+    "paymentMethod": "Mandiri",
+    "amount": 760821,
+    "description": "Sampingan bulan April"
+  },
+  {
+    "id": 187,
+    "date": "2025-04-19T21:04:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "Cash",
+    "amount": 177315,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 188,
+    "date": "2025-04-05T13:08:00Z",
+    "type": "Expense",
+    "category": "Transportasi",
+    "paymentMethod": "ShopeePay",
+    "amount": 50000,
+    "description": "Pengeluaran untuk transportasi"
+  },
+  {
+    "id": 189,
+    "date": "2025-04-27T01:58:00Z",
+    "type": "Expense",
+    "category": "Belanja",
+    "paymentMethod": "ShopeePay",
+    "amount": 217494,
+    "description": "Pengeluaran untuk belanja"
+  },
+  {
+    "id": 190,
+    "date": "2025-04-22T18:48:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "ShopeePay",
+    "amount": 1001584,
+    "description": "Bonus bulan April"
+  },
+  {
+    "id": 191,
+    "date": "2025-04-03T18:48:00Z",
+    "type": "Income",
+    "category": "Bonus",
+    "paymentMethod": "ShopeePay",
+    "amount": 134000,
+    "description": "Bonus bulan April"
+  },
+  {
+    "id": 192,
+    "date": "2025-04-03T18:48:00Z",
+    "type": "Expense",
+    "category": "Bonus",
+    "paymentMethod": "ShopeePay",
+    "amount": 230000,
+    "description": "Bonus bulan April"
+  }
+]

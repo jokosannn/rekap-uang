@@ -6,42 +6,48 @@ import { CartesianGrid, Line, LineChart, XAxis } from 'recharts'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
+import data from '@/constants/transaction.json'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { filterCurrentMonthTransactions, formatNumber } from '@/lib/utils'
+import { Summary } from '@/types/summary'
+import { Transaction } from '@/types/transaction'
 
 export const description = 'An interactive area chart'
 
-const chartData = [
-  { date: '2024-06-01', income: 0, expense: 15000 },
-  { date: '2024-06-02', income: 0, expense: 15000 },
-  { date: '2024-06-03', income: 0, expense: 15000 },
-  { date: '2024-06-04', income: 0, expense: 15000 },
-  { date: '2024-06-05', income: 1000000, expense: 15000 },
-  { date: '2024-06-06', income: 0, expense: 15000 },
-  { date: '2024-06-07', income: 0, expense: 15000 },
-  { date: '2024-06-08', income: 0, expense: 15000 },
-  { date: '2024-06-09', income: 0, expense: 15000 },
-  { date: '2024-06-10', income: 0, expense: 15000 },
-  { date: '2024-06-11', income: 0, expense: 15000 },
-  { date: '2024-06-12', income: 0, expense: 15000 },
-  { date: '2024-06-13', income: 200000, expense: 15000 },
-  { date: '2024-06-14', income: 0, expense: 15000 },
-  { date: '2024-06-15', income: 0, expense: 15000 },
-  { date: '2024-06-16', income: 0, expense: 150000 },
-  { date: '2024-06-17', income: 0, expense: 15000 },
-  { date: '2024-06-18', income: 0, expense: 15000 },
-  { date: '2024-06-19', income: 0, expense: 15000 },
-  { date: '2024-06-20', income: 0, expense: 15000 },
-  { date: '2024-06-21', income: 0, expense: 15000 },
-  { date: '2024-06-22', income: 0, expense: 15000 },
-  { date: '2024-06-23', income: 0, expense: 15000 },
-  { date: '2024-06-24', income: 0, expense: 15000 },
-  { date: '2024-06-25', income: 200000, expense: 15000 },
-  { date: '2024-06-26', income: 0, expense: 15000 },
-  { date: '2024-06-27', income: 0, expense: 15000 },
-  { date: '2024-06-28', income: 0, expense: 15000 },
-  { date: '2024-06-29', income: 0, expense: 15000 },
-  { date: '2024-06-30', income: 0, expense: 15000 }
-]
+// const chartData = [
+//   { date: '2024-06-01', income: 0, expense: 15000 },
+//   { date: '2024-06-02', income: 0, expense: 15000 },
+//   { date: '2024-06-03', income: 0, expense: 15000 },
+//   { date: '2024-06-04', income: 0, expense: 15000 },
+//   { date: '2024-06-05', income: 1000000, expense: 15000 },
+//   { date: '2024-06-06', income: 0, expense: 15000 },
+//   { date: '2024-06-07', income: 0, expense: 15000 },
+//   { date: '2024-06-08', income: 0, expense: 15000 },
+//   { date: '2024-06-09', income: 0, expense: 15000 },
+//   { date: '2024-06-10', income: 0, expense: 15000 },
+//   { date: '2024-06-11', income: 0, expense: 15000 },
+//   { date: '2024-06-12', income: 0, expense: 15000 },
+//   { date: '2024-06-13', income: 200000, expense: 15000 },
+//   { date: '2024-06-14', income: 0, expense: 15000 },
+//   { date: '2024-06-15', income: 0, expense: 15000 },
+//   { date: '2024-06-16', income: 0, expense: 150000 },
+//   { date: '2024-06-17', income: 0, expense: 15000 },
+//   { date: '2024-06-18', income: 0, expense: 15000 },
+//   { date: '2024-06-19', income: 0, expense: 15000 },
+//   { date: '2024-06-20', income: 0, expense: 15000 },
+//   { date: '2024-06-21', income: 0, expense: 15000 },
+//   { date: '2024-06-22', income: 0, expense: 15000 },
+//   { date: '2024-06-23', income: 0, expense: 15000 },
+//   { date: '2024-06-24', income: 0, expense: 15000 },
+//   { date: '2024-06-25', income: 200000, expense: 15000 },
+//   { date: '2024-06-26', income: 0, expense: 15000 },
+//   { date: '2024-06-27', income: 0, expense: 15000 },
+//   { date: '2024-06-28', income: 0, expense: 15000 },
+//   { date: '2024-06-29', income: 0, expense: 15000 },
+//   { date: '2024-06-30', income: 0, expense: 15000 }
+// ]
+
+const chartData = filterCurrentMonthTransactions(data as Transaction[])
 
 const chartConfig = {
   income: {
@@ -54,7 +60,11 @@ const chartConfig = {
   }
 } satisfies ChartConfig
 
-export function ChartTotalTransaction() {
+type IProps = {
+  data: Summary
+}
+
+export function ChartTotalTransaction({ data }: IProps) {
   const isMobile = useIsMobile()
   const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig | 'all'>('all')
 
@@ -92,8 +102,8 @@ export function ChartTotalTransaction() {
                 onClick={() => setActiveChart(chart)}
               >
                 <span className="text-muted-foreground text-xs">{chartConfig[chart].label}</span>
-                <span className="truncate text-lg leading-none font-bold sm:text-3xl">
-                  {total[key as keyof typeof total].toLocaleString()}
+                <span className="truncate text-lg leading-none font-bold sm:text-2xl">
+                  Rp {formatNumber(total[key as keyof typeof total])}
                 </span>
                 <span className="text-xs leading-none font-medium sm:text-sm">
                   {totalTransaksi[key as keyof typeof total].length} Transaksi
