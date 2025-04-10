@@ -6,11 +6,12 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import data from '@/constants/transaction.json'
-import { cn, getTransactionHistory } from '@/lib/utils'
+import { cn } from '@/lib/utils'
+import { getTransactionHistory } from '@/services/transaction-service'
 import { Transaction } from '@/types/transaction'
 
 export function TransactionHistory() {
-  const transactions = getTransactionHistory(data as Transaction[]).slice(0, 5)
+  const transactions = getTransactionHistory(data as Transaction[], undefined, undefined).slice(0, 5)
 
   return (
     <Card>

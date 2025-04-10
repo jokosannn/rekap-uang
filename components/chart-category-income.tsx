@@ -15,7 +15,8 @@ import {
 } from '@/components/ui/card'
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 import data from '@/constants/transaction.json'
-import { formatNumber, getMonthlyCategoryTransactions } from '@/lib/utils'
+import { formatNumber } from '@/lib/utils'
+import { getMonthlyCategoryTransactions } from '@/services/transaction-service'
 import { Transaction } from '@/types/transaction'
 
 const chartDefault = [

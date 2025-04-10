@@ -6,7 +6,7 @@ import { ChartTotalTransaction } from '@/components/chart-total-transaction'
 import { SectionCards } from '@/components/section-cards'
 import { TransactionHistory } from '@/components/transaction-history'
 import data from '@/constants/transaction.json'
-import { getMonthlyComparison } from '@/lib/utils'
+import { getMonthlyComparison } from '@/services/transaction-service'
 import { Transaction } from '@/types/transaction'
 
 export default function Page() {
