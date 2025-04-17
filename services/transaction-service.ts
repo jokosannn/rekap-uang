@@ -103,7 +103,7 @@ export function getMonthlyCategoryTransactions(
 
   // console.log({ startDate, endDate })
 
-  if (!endDate) {
+  if (!endDate && date) {
     transactions.forEach(tx => {
       const txDateDay = new Date(tx.date).getDate()
       const txDateMounth = new Date(tx.date).getMonth()
@@ -184,10 +184,83 @@ export function getMonthlyCategoryTransactions(
         }
       }
     })
-  } else {
+  } else if (startDate && endDate) {
     transactions.forEach(tx => {
       const txDate = new Date(tx.date)
-      if (txDate >= startDate! && txDate <= endDate) {
+      if (txDate >= startDate && txDate <= endDate) {
+        if (tx.type === 'Income') {
+          const formattedDate = tx.category
+
+          if (!transactionMap[formattedDate]) {
+            transactionMap[formattedDate] = {
+              kategori: tx.category,
+              total: 0,
+              fill: `var(--color-${tx.category.toLowerCase()})`
+            }
+          }
+
+          switch (tx.category) {
+            case 'Gaji':
+              transactionMap[formattedDate].kategori = 'gaji'
+              transactionMap[formattedDate].total += tx.amount
+              break
+            case 'Sampingan':
+              transactionMap[formattedDate].kategori = 'sampingan'
+              transactionMap[formattedDate].total += tx.amount
+              break
+            case 'Bonus':
+              transactionMap[formattedDate].kategori = 'bonus'
+              transactionMap[formattedDate].total += tx.amount
+              break
+            case 'Investasi':
+              transactionMap[formattedDate].kategori = 'investasi'
+              transactionMap[formattedDate].total += tx.amount
+              break
+            case 'Lainya':
+              transactionMap[formattedDate].kategori = 'lainya'
+              transactionMap[formattedDate].total += tx.amount
+              break
+          }
+        } else {
+          const formattedDate = tx.category
+
+          if (!transactionMap[formattedDate]) {
+            transactionMap[formattedDate] = {
+              kategori: tx.category,
+              total: 0,
+              fill: `var(--color-${tx.category.toLowerCase()})`
+            }
+          }
+
+          switch (tx.category) {
+            case 'Jajan':
+              transactionMap[formattedDate].kategori = 'jajan'
+              transactionMap[formattedDate].total += tx.amount
+              break
+            case 'Transportasi':
+              transactionMap[formattedDate].kategori = 'transportasi'
+              transactionMap[formattedDate].total += tx.amount
+              break
+            case 'Belanja':
+              transactionMap[formattedDate].kategori = 'belanja'
+              transactionMap[formattedDate].total += tx.amount
+              break
+            case 'Hiburan':
+              transactionMap[formattedDate].kategori = 'hiburan'
+              transactionMap[formattedDate].total += tx.amount
+              break
+            case 'Lainya':
+              transactionMap[formattedDate].kategori = 'lainya'
+              transactionMap[formattedDate].total += tx.amount
+              break
+          }
+        }
+      }
+    })
+  } else if (!date) {
+    transactions.forEach(tx => {
+      const txDate = new Date(tx.date)
+      if (txDate >= startDate && txDate <= now) {
         if (tx.type === 'Income') {
           const formattedDate = tx.category
 

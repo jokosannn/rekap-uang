@@ -2,9 +2,11 @@
 
 import * as React from 'react'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { CalendarIcon } from 'lucide-react'
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
@@ -19,6 +21,7 @@ import {
   DrawerTitle,
   DrawerTrigger
 } from '@/components/ui/drawer'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -29,9 +32,59 @@ import { cn } from '@/lib/utils'
 
 import { transactionSchema } from './schema'
 
+const FormSchema = z.object({
+  // username: z.string().min(2, {
+  //   message: 'Username must be at least 2 characters.'
+  // }),
+  date: z.date(),
+  type: z.string().min(1, 'Wajib diisi😤'),
+  category: z.string().min(1, 'Wajib diisi😤'),
+  paymentMethod: z.string().min(1, 'Wajib diisi😤'),
+  amount: z.number().min(1, 'Wajib diisi😤'),
+  description: z.string().min(1, 'Wajib diisi😤')
+})
+
+const categories = [
+  { label: 'Gaji', value: 'Gaji' },
+  { label: 'Lainnya', value: 'Lainnya' },
+  { label: 'Belanja', value: 'Belanja' },
+  { label: 'Jajan', value: 'Jajan' },
+  { label: 'Transportasi', value: 'Transportasi' },
+  { label: 'Hiburan', value: 'Hiburan' },
+  { label: 'Bonus', value: 'Bonus' },
+  { label: 'Sampingan', value: 'Sampingan' }
+]
+
+const paymentMethod = [
+  { label: 'Mandiri', value: 'Mandiri' },
+  { label: 'BNI', value: 'BNI' },
+  { label: 'BCA', value: 'BCA' },
+  { label: 'ShopeePay', value: 'ShopeePay' },
+  { label: 'OVO', value: 'OVO' },
+  { label: 'Gopay', value: 'Gopay' },
+  { label: 'Cash', value: 'Cash' }
+  // { label: 'Lainya', value: 'Lainya' }
+]
+
 export default function TableCellViewer({ item }: { item: z.infer<typeof transactionSchema> }) {
   const isMobile = useIsMobile()
   const [date, setDate] = React.useState<Date>()
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      date: new Date(),
+      type: '',
+      category: '',
+      paymentMethod: '',
+      amount: 0,
+      description: ''
+    }
+  })
+
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data)
+  }
 
   return (
     <Drawer direction={isMobile ? 'bottom' : 'right'}>
@@ -45,95 +98,163 @@ export default function TableCellViewer({ item }: { item: z.infer<typeof transac
           <DrawerTitle>{format(new Date(item.date), 'dd MMMM yyyy', { locale: id })}</DrawerTitle>
           <DrawerDescription>Showing total visitors for the last 6 months</DrawerDescription>
         </DrawerHeader>
-        <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
-          <form className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3">
-              <Label htmlFor="header">Tanggal</Label>
-              {/* <Input id="header" defaultValue={item.date} /> */}
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={'outline'}
-                    className={cn(
-                      'w-full justify-start text-left font-normal',
-                      !date && 'text-muted-foreground'
-                    )}
-                  >
-                    <CalendarIcon />
-                    {date ? format(date, 'PPP') : <span>Pick a date</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
-                </PopoverContent>
-              </Popover>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="type">Type</Label>
-                <Select defaultValue={item.type}>
-                  <SelectTrigger id="type" className="w-full">
-                    <SelectValue placeholder="Select a type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Income">Income</SelectItem>
-                    <SelectItem value="Expense">Expense</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="status">Kategori</Label>
-                <Select defaultValue={item.category}>
-                  <SelectTrigger id="status" className="w-full">
-                    <SelectValue placeholder="Select a status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Done">Done</SelectItem>
-                    <SelectItem value="In Progress">In Progress</SelectItem>
-                    <SelectItem value="Not Started">Not Started</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="status">Pebayaran</Label>
-                <Select defaultValue={item.paymentMethod}>
-                  <SelectTrigger id="status" className="w-full">
-                    <SelectValue placeholder="Select a status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Done">Done</SelectItem>
-                    <SelectItem value="In Progress">In Progress</SelectItem>
-                    <SelectItem value="Not Started">Not Started</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="amount">Nominal</Label>
-                {/* <Input id="limit" defaultValue={item.category} /> */}
-                <Input
-                  id="amount"
-                  type="text"
-                  inputMode="numeric"
-                  defaultValue={item.amount}
-                  onChange={e => Number(e.target.value) || 0}
-                  // disabled={isLoading}
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4 overflow-auto px-4 text-sm"
+          >
+            <div className="space-y-6">
+              <FormField
+                control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col items-center justify-center">
+                    <FormLabel>Tanggal</FormLabel>
+                    <span className="text-muted-foreground text-sm">
+                      {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
+                    </span>
+
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      initialFocus
+                    />
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* type */}
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Tipe</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Pilih tipe transaksi." />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Income">Pemasukan</SelectItem>
+                        <SelectItem value="Expense">Pengeluaran</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* category */}
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Kategori</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Pilih kategori transaksi." />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories.map(item => (
+                          <SelectItem key={item.value} value={item.value}>
+                            {item.label}
+                          </SelectItem>
+                        ))}
+                        {/* <SelectItem value="Expense">Pengeluaran</SelectItem> */}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="flex w-full flex-col justify-between gap-4 sm:flex-row">
+                {/* payment */}
+                <FormField
+                  control={form.control}
+                  name="paymentMethod"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Pembayaran</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Pilih metode pembayaran." />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {paymentMethod.map(item => (
+                            <SelectItem key={item.value} value={item.value}>
+                              {item.label}
+                            </SelectItem>
+                          ))}
+                          {/* <SelectItem value="Expense">Pengeluaran</SelectItem> */}
+                        </SelectContent>
+                      </Select>
+                      {/* <span className="w-full text-center">or</span> */}
+                      <Input
+                        {...field}
+                        type="text"
+                        placeholder="Method lainya"
+                        onChange={e => field.onChange(e.target.value)}
+                      />
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
+
+              {/* total */}
+              <FormField
+                control={form.control}
+                name="amount"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Total</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="text"
+                        inputMode="numeric"
+                        onChange={e => field.onChange(Number(e.target.value) || 0)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Keterangan</FormLabel>
+                    <FormControl>
+                      <Textarea {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
-            <div className="flex flex-col gap-3">
-              <Label htmlFor="reviewer">Deskripsi</Label>
-              <Textarea placeholder="Tulis deskripsi disini." />
-            </div>
+            <DrawerFooter className="px-0">
+              <Button type="submit">Simpan</Button>
+              <DrawerClose asChild>
+                <Button variant="destructive">Hapus</Button>
+              </DrawerClose>
+            </DrawerFooter>
           </form>
-        </div>
-        <DrawerFooter>
-          <Button>Simpan</Button>
-          <DrawerClose asChild>
-            <Button variant="destructive">Hapus</Button>
-          </DrawerClose>
-        </DrawerFooter>
+        </Form>
       </DrawerContent>
     </Drawer>
   )

@@ -2,11 +2,13 @@
 
 import * as React from 'react'
 
+import { IconFilter, IconPlus } from '@tabler/icons-react'
 import { Table } from '@tanstack/react-table'
 import { addDays, format } from 'date-fns'
 import { CalendarIcon, Download, X } from 'lucide-react'
 import { DateRange } from 'react-day-picker'
 
+import { TransactionForm } from '@/components/transaction-form'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
@@ -41,45 +43,59 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
   }))
 
   return (
-    <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
+    <div className="flex flex-col items-start justify-between gap-4 lg:flex-row">
       <div className="flex w-full flex-1 flex-col items-start justify-start gap-4">
         <div className="flex w-full shrink-0 gap-2">
           <Input
-            placeholder="Filter tasks..."
+            placeholder="Filter transaksi..."
             value={(table.getColumn('description')?.getFilterValue() as string) ?? ''}
             onChange={event => table.getColumn('description')?.setFilterValue(event.target.value)}
-            className="max-w-md"
+            className="max-w-xl"
           />
-          <DataTableViewOptions table={table} />
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {table.getColumn('type') && (
-            <DataTableFacetedFilter column={table.getColumn('type')} title="Type" options={types} />
-          )}
-          {table.getColumn('category') && (
-            <DataTableFacetedFilter
-              column={table.getColumn('category')}
-              title="Kategori"
-              options={category}
-            />
-          )}
-          {table.getColumn('paymentMethod') && (
-            <DataTableFacetedFilter
-              column={table.getColumn('paymentMethod')}
-              title="Pembayaran"
-              options={payments}
-            />
-          )}
-          {isFiltered && (
-            <Button
-              variant="ghost"
-              onClick={() => table.resetColumnFilters()}
-              className="h-8 px-2 lg:px-3"
-            >
-              Reset
-              <X />
-            </Button>
-          )}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button className="justify-start">
+                <IconFilter />
+                {/* <span className="hidden lg:block">Filters</span> */}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-fit" align="end">
+              <div className="grid gap-2">
+                {table.getColumn('type') && (
+                  <DataTableFacetedFilter
+                    column={table.getColumn('type')}
+                    title="Type"
+                    options={types}
+                  />
+                )}
+                {table.getColumn('category') && (
+                  <DataTableFacetedFilter
+                    column={table.getColumn('category')}
+                    title="Kategori"
+                    options={category}
+                  />
+                )}
+                {table.getColumn('paymentMethod') && (
+                  <DataTableFacetedFilter
+                    column={table.getColumn('paymentMethod')}
+                    title="Pembayaran"
+                    options={payments}
+                  />
+                )}
+                {isFiltered && (
+                  <Button
+                    variant="destructive"
+                    onClick={() => table.resetColumnFilters()}
+                    className="h-8 px-2 lg:px-3"
+                  >
+                    Reset
+                    <X />
+                  </Button>
+                )}
+              </div>
+            </PopoverContent>
+          </Popover>
+          {/* <DataTableViewOptions table={table} /> */}
         </div>
       </div>
       <div className="flex items-center gap-2">
@@ -145,7 +161,7 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
           <Download />
         </Button>
       </div>
-      {/* <DataTableViewOptions table={table} /> */}
+      <TransactionForm />
     </div>
   )
 }
