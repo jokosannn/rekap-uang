@@ -1,64 +1,163 @@
-import { format } from 'date-fns'
+import { differenceInDays, format } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 
 import { Transaction } from '@/types/transaction'
 
-export function getMonthlyComparison(transactions: any[]) {
+// persentase
+const calcPercentage = (current: number, previous: number): number => {
+  if (previous === 0) return current === 0 ? 0 : 100
+  return ((current - previous) / previous) * 100
+}
+
+// ubah desimal
+const floorTo2Decimal = (value: number) => Math.floor(value * 100) / 100
+
+// cek perbandingan bulan ini dengan bulan sebelumnya
+export function checkDateMountComparison() {
+  const now = new Date()
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1) // awal bulan ini
+
+  const currentMonth = now.getMonth() // bulan ini (0 -> januari dst...)
+  const currentYear = now.getFullYear() // tahun ini
+  const previousMonth = new Date(currentYear, currentMonth - 1).getMonth() // bulan lalu
+  const previousYear = new Date(currentYear, currentMonth - 1).getFullYear() // tahun lalu
+
+  return {
+    current: {
+      star: startOfMonth,
+      now
+    },
+    previous: {
+      mount: previousMonth,
+      year: previousYear
+    }
+  }
+}
+
+export function getMonthlyComparisonBalance(transactions: Transaction[]) {
   const now = new Date()
   const currentMonth = now.getMonth()
   const currentYear = now.getFullYear()
 
-  const previousMonthDate = new Date(currentYear, currentMonth - 1)
-  const previousMonth = previousMonthDate.getMonth()
-  const previousYear = previousMonthDate.getFullYear()
+  const prevDate = new Date(currentYear, currentMonth, 0) // Akhir bulan sebelumnya
+  const startCurrentMonth = new Date(currentYear, currentMonth, 1) // Awal bulan ini
 
-  const summary = {
-    current: { income: { value: 0, transactionCount: 0 }, expense: { value: 0, transactionCount: 0 } },
-    previous: { income: 0, expense: 0 },
-    percentageChange: {
-      income: 0,
-      expense: 0
-    }
-  }
+  let numberPrev = 0
+  let numberCurrent = 0
+  let percentageChange = 0
 
   transactions.forEach(tx => {
     const txDate = new Date(tx.date)
-    const month = txDate.getMonth()
-    const year = txDate.getFullYear()
+    const isIncome = tx.type === 'Income'
     const amount = tx.amount
 
-    // Hitung bulan sebelumnya
-    if (month === previousMonth && year === previousYear) {
-      if (tx.type === 'Income') summary.previous.income += amount
-      else if (tx.type === 'Expense') summary.previous.expense += amount
+    if (txDate <= prevDate) {
+      numberPrev += isIncome ? amount : -amount
+    } else if (txDate >= startCurrentMonth && txDate <= now) {
+      numberCurrent += isIncome ? amount : -amount
     }
   })
 
-  const currentTransaction = filterCurrentMonthTransactions(transactions)
-  currentTransaction.forEach(tx => {
-    summary.current.income.transactionCount++
-    summary.current.income.value += tx.income
-    summary.current.expense.transactionCount++
-    summary.current.expense.value += tx.expense
-  })
+  const currentBalance = numberCurrent + numberPrev
+  percentageChange = floorTo2Decimal(calcPercentage(currentBalance, numberPrev))
 
-  // Hitung persentase perubahan Income dan Expense
-  const calcPercentage = (current: number, previous: number): number => {
-    if (previous === 0) return current === 0 ? 0 : 100
-    return ((current - previous) / previous) * 100
+  return {
+    prevBalance: numberPrev,
+    currentBalance,
+    percentageChange
+  }
+}
+
+export function getMonthlyComparison(transaction: Transaction[]) {
+  const { current, previous } = checkDateMountComparison()
+  const saldo = getMonthlyComparisonBalance(transaction)
+
+  const summary = {
+    current: {
+      income: {
+        value: 0,
+        transactionCount: 0,
+        percentageChange: 0
+      },
+      expense: {
+        value: 0,
+        transactionCount: 0,
+        percentageChange: 0
+      }
+    },
+    previous: { income: 0, expense: 0, percentageChange: 0 },
+    balance: saldo
   }
 
-  const floorTo2Decimal = (value: number) => Math.floor(value * 100) / 100
+  transaction.forEach(tx => {
+    const dateTransaction = new Date(tx.date)
+    const monthTransaction = dateTransaction.getMonth()
+    const yearTransaction = dateTransaction.getFullYear()
+    const amount = tx.amount
+    const isIncome = tx.type === 'Income'
+    const isExpense = tx.type === 'Expense'
 
-  summary.percentageChange.income = floorTo2Decimal(
+    // Hitung bulan sebelumnya
+    if (monthTransaction === previous.mount && yearTransaction === previous.year) {
+      if (isIncome) summary.previous.income += amount
+      else if (isExpense) summary.previous.expense += amount
+    }
+
+    // Hitung bulan ini saja
+    if (dateTransaction >= current.star && dateTransaction <= current.now) {
+      if (isIncome) {
+        summary.current.income.value += amount
+        summary.current.income.transactionCount++
+      } else if (isExpense) {
+        summary.current.expense.value += amount
+        summary.current.expense.transactionCount++
+      }
+    }
+  })
+
+  summary.current.income.percentageChange = floorTo2Decimal(
     calcPercentage(summary.current.income.value, summary.previous.income)
   )
-
-  summary.percentageChange.expense = floorTo2Decimal(
+  summary.current.expense.percentageChange = floorTo2Decimal(
     calcPercentage(summary.current.expense.value, summary.previous.expense)
   )
 
   return summary
+}
+
+export function filterTransactions(data: Transaction[], type: string) {
+  const transactionMapIncome = data.reduce<Record<string, { date: string; pemasukan: number }>>(
+    (acc, tx) => {
+      if (new Date(tx.date) <= new Date() && tx.type === 'Income') {
+        const formattedDate = format(new Date(tx.date), 'yyyy-MM-dd')
+        acc[formattedDate] = acc[formattedDate] || { date: formattedDate, pemasukan: 0 }
+        acc[formattedDate].pemasukan += tx.amount
+      }
+      return acc
+    },
+    {}
+  )
+
+  const transactionMapExpense = data.reduce<Record<string, { date: string; pengeluaran: number }>>(
+    (acc, tx) => {
+      if (new Date(tx.date) <= new Date() && tx.type === 'Expense') {
+        const formattedDate = format(new Date(tx.date), 'yyyy-MM-dd')
+        acc[formattedDate] = acc[formattedDate] || { date: formattedDate, pengeluaran: 0 }
+        acc[formattedDate].pengeluaran += tx.amount
+      }
+      return acc
+    },
+    {}
+  )
+
+  return Object.values(type === 'Income' ? transactionMapIncome : transactionMapExpense).sort((a, b) =>
+    a.date.localeCompare(b.date)
+  )
+}
+
+export function formatDateRangeDiff(date: DateRange | undefined): number {
+  if (!date?.from || !date?.to) return 0
+  return differenceInDays(date.to, date.from)
 }
 
 export function filterCurrentMonthTransactions(transactions: Transaction[]) {
@@ -97,243 +196,58 @@ export function getMonthlyCategoryTransactions(
 ) {
   const now = new Date()
   const startDate = date?.from ?? new Date(now.getFullYear(), now.getMonth(), 1)
-  const endDate = date?.to ? date.to : undefined
+  const endDate = date?.to ?? (date ? startDate : now)
+
+  const incomeCategories = {
+    Gaji: 'gaji',
+    Sampingan: 'sampingan',
+    Bonus: 'bonus',
+    Investasi: 'investasi',
+    Lainya: 'lainya'
+  }
+
+  const expenseCategories = {
+    Jajan: 'jajan',
+    Transportasi: 'transportasi',
+    Belanja: 'belanja',
+    Hiburan: 'hiburan',
+    Lainya: 'lainya'
+  }
 
   const transactionMap: Record<string, { kategori: string; total: number; fill: string }> = {}
 
-  // console.log({ startDate, endDate })
+  transactions.forEach(tx => {
+    const txDate = new Date(tx.date)
+    const isSameDay =
+      !date?.to &&
+      date &&
+      txDate.getFullYear() === startDate.getFullYear() &&
+      txDate.getMonth() === startDate.getMonth() &&
+      txDate.getDate() === startDate.getDate()
 
-  if (!endDate && date) {
-    transactions.forEach(tx => {
-      const txDateDay = new Date(tx.date).getDate()
-      const txDateMounth = new Date(tx.date).getMonth()
-      const txDateYear = new Date(tx.date).getFullYear()
-      if (
-        txDateMounth === startDate.getMonth() &&
-        txDateDay === startDate.getDate() &&
-        txDateYear === startDate.getFullYear()
-      ) {
-        // console.log({ mouth: startDate.getMonth(), txDateMounth, txDateDay, day: startDate.getDate() })
-        // console.log({ total: tx.amount, cat: tx.category, date: tx.date, id: tx.id })
-        if (tx.type === 'Income') {
-          const formattedDate = tx.category
+    const isInRange = txDate >= startDate && txDate <= endDate
 
-          if (!transactionMap[formattedDate]) {
-            transactionMap[formattedDate] = {
-              kategori: tx.category,
-              total: 0,
-              fill: `var(--color-${tx.category.toLowerCase()})`
-            }
-          }
+    if ((date && !date.to && isSameDay) || (startDate && endDate && isInRange)) {
+      const categoryMap = tx.type === 'Income' ? incomeCategories : expenseCategories
+      const mappedCategory = categoryMap[tx.category as keyof typeof categoryMap]
 
-          switch (tx.category) {
-            case 'Gaji':
-              transactionMap[formattedDate].kategori = 'gaji'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Sampingan':
-              transactionMap[formattedDate].kategori = 'sampingan'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Bonus':
-              transactionMap[formattedDate].kategori = 'bonus'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Investasi':
-              transactionMap[formattedDate].kategori = 'investasi'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Lainya':
-              transactionMap[formattedDate].kategori = 'lainya'
-              transactionMap[formattedDate].total += tx.amount
-              break
-          }
-        } else {
-          const formattedDate = tx.category
+      if (!mappedCategory) return
 
-          if (!transactionMap[formattedDate]) {
-            transactionMap[formattedDate] = {
-              kategori: tx.category,
-              total: 0,
-              fill: `var(--color-${tx.category.toLowerCase()})`
-            }
-          }
-
-          switch (tx.category) {
-            case 'Jajan':
-              transactionMap[formattedDate].kategori = 'jajan'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Transportasi':
-              transactionMap[formattedDate].kategori = 'transportasi'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Belanja':
-              transactionMap[formattedDate].kategori = 'belanja'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Hiburan':
-              transactionMap[formattedDate].kategori = 'hiburan'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Lainya':
-              transactionMap[formattedDate].kategori = 'lainya'
-              transactionMap[formattedDate].total += tx.amount
-              break
-          }
+      if (!transactionMap[tx.category]) {
+        transactionMap[tx.category] = {
+          kategori: mappedCategory,
+          total: 0,
+          fill: `var(--color-${tx.category.toLowerCase()})`
         }
       }
-    })
-  } else if (startDate && endDate) {
-    transactions.forEach(tx => {
-      const txDate = new Date(tx.date)
-      if (txDate >= startDate && txDate <= endDate) {
-        if (tx.type === 'Income') {
-          const formattedDate = tx.category
 
-          if (!transactionMap[formattedDate]) {
-            transactionMap[formattedDate] = {
-              kategori: tx.category,
-              total: 0,
-              fill: `var(--color-${tx.category.toLowerCase()})`
-            }
-          }
-
-          switch (tx.category) {
-            case 'Gaji':
-              transactionMap[formattedDate].kategori = 'gaji'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Sampingan':
-              transactionMap[formattedDate].kategori = 'sampingan'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Bonus':
-              transactionMap[formattedDate].kategori = 'bonus'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Investasi':
-              transactionMap[formattedDate].kategori = 'investasi'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Lainya':
-              transactionMap[formattedDate].kategori = 'lainya'
-              transactionMap[formattedDate].total += tx.amount
-              break
-          }
-        } else {
-          const formattedDate = tx.category
-
-          if (!transactionMap[formattedDate]) {
-            transactionMap[formattedDate] = {
-              kategori: tx.category,
-              total: 0,
-              fill: `var(--color-${tx.category.toLowerCase()})`
-            }
-          }
-
-          switch (tx.category) {
-            case 'Jajan':
-              transactionMap[formattedDate].kategori = 'jajan'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Transportasi':
-              transactionMap[formattedDate].kategori = 'transportasi'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Belanja':
-              transactionMap[formattedDate].kategori = 'belanja'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Hiburan':
-              transactionMap[formattedDate].kategori = 'hiburan'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Lainya':
-              transactionMap[formattedDate].kategori = 'lainya'
-              transactionMap[formattedDate].total += tx.amount
-              break
-          }
-        }
-      }
-    })
-  } else if (!date) {
-    transactions.forEach(tx => {
-      const txDate = new Date(tx.date)
-      if (txDate >= startDate && txDate <= now) {
-        if (tx.type === 'Income') {
-          const formattedDate = tx.category
-
-          if (!transactionMap[formattedDate]) {
-            transactionMap[formattedDate] = {
-              kategori: tx.category,
-              total: 0,
-              fill: `var(--color-${tx.category.toLowerCase()})`
-            }
-          }
-
-          switch (tx.category) {
-            case 'Gaji':
-              transactionMap[formattedDate].kategori = 'gaji'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Sampingan':
-              transactionMap[formattedDate].kategori = 'sampingan'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Bonus':
-              transactionMap[formattedDate].kategori = 'bonus'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Investasi':
-              transactionMap[formattedDate].kategori = 'investasi'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Lainya':
-              transactionMap[formattedDate].kategori = 'lainya'
-              transactionMap[formattedDate].total += tx.amount
-              break
-          }
-        } else {
-          const formattedDate = tx.category
-
-          if (!transactionMap[formattedDate]) {
-            transactionMap[formattedDate] = {
-              kategori: tx.category,
-              total: 0,
-              fill: `var(--color-${tx.category.toLowerCase()})`
-            }
-          }
-
-          switch (tx.category) {
-            case 'Jajan':
-              transactionMap[formattedDate].kategori = 'jajan'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Transportasi':
-              transactionMap[formattedDate].kategori = 'transportasi'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Belanja':
-              transactionMap[formattedDate].kategori = 'belanja'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Hiburan':
-              transactionMap[formattedDate].kategori = 'hiburan'
-              transactionMap[formattedDate].total += tx.amount
-              break
-            case 'Lainya':
-              transactionMap[formattedDate].kategori = 'lainya'
-              transactionMap[formattedDate].total += tx.amount
-              break
-          }
-        }
-      }
-    })
-  }
+      transactionMap[tx.category].total += tx.amount
+    }
+  })
 
   return Object.values(transactionMap)
 }
+
 export function getTransactionHistory(
   transactions: Transaction[],
   date: DateRange | undefined,
@@ -341,14 +255,25 @@ export function getTransactionHistory(
 ) {
   const now = new Date()
   const startOfMonth = date?.from ?? new Date(now.getFullYear(), now.getMonth(), 1)
-  const endDate = date?.to ?? now
+  // const endDate = date?.to ?? now
+  const endDate = date?.to ?? (date ? startOfMonth : now)
 
-  return transactions.filter(tx => {
-    const txDate = new Date(tx.date)
+  return transactions
+    .filter(tx => {
+      const txDate = new Date(tx.date)
 
-    const isInRange = txDate >= startOfMonth && txDate <= endDate
-    const isTypeMatch = type ? tx.type === type : true
+      const isInRange = txDate >= startOfMonth && txDate <= endDate
+      const isTypeMatch = type ? tx.type === type : true
 
-    return isInRange && isTypeMatch
-  })
+      const isSameDay =
+        !date?.to &&
+        date &&
+        txDate.getFullYear() === startOfMonth.getFullYear() &&
+        txDate.getMonth() === startOfMonth.getMonth() &&
+        txDate.getDate() === startOfMonth.getDate()
+
+      return (isInRange && isTypeMatch) || (date && !date.to && isSameDay && isTypeMatch)
+    })
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .slice(-5)
 }

@@ -5,12 +5,17 @@ import { ChartCategoryIncome } from '@/components/chart-category-income'
 import { ChartTotalTransaction } from '@/components/chart-total-transaction'
 import { SectionCards } from '@/components/section-cards'
 import { TransactionHistory } from '@/components/transaction-history'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import data from '@/constants/transaction.json'
-import { getMonthlyComparison } from '@/services/transaction-service'
+import { getMonthlyComparison, getTransactionHistory } from '@/services/transaction-service'
 import { Transaction } from '@/types/transaction'
 
 export default function Page() {
-  const summary = getMonthlyComparison(data as Transaction[])
+  const summary = getMonthlyComparison(
+    data.sort((a, b) => a.date.localeCompare(b.date)) as Transaction[]
+  )
+
+  const transactions = getTransactionHistory(data as Transaction[], undefined, undefined)
 
   return (
     <div className="@container/main relative flex flex-1 flex-col gap-2">
@@ -30,12 +35,20 @@ export default function Page() {
           <ChartTotalTransaction />
 
           <div className="mt-4 grid flex-1 scroll-mt-20 items-start gap-4 lg:grid-cols-2">
-            <ChartCategoryExpense />
             <ChartCategoryIncome />
+            <ChartCategoryExpense />
           </div>
 
           <div className="mt-4">
-            <TransactionHistory />
+            <Card>
+              <CardHeader>
+                <CardTitle>Riwayat Transaksi</CardTitle>
+                <CardDescription>Transaksi terbaru Anda</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <TransactionHistory transactions={transactions} />
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

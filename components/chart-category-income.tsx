@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/card'
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 import data from '@/constants/transaction.json'
-import { formatNumber } from '@/lib/utils'
+import { formatNumber, formatRupiah } from '@/lib/utils'
 import { getMonthlyCategoryTransactions } from '@/services/transaction-service'
 import { Transaction } from '@/types/transaction'
 
@@ -33,23 +33,23 @@ const chartConfig = {
   },
   gaji: {
     label: 'Gaji',
-    color: 'hsl(var(--chart-1))'
+    color: 'var(--chart-1)'
   },
   investasi: {
     label: 'Investasi',
-    color: 'hsl(var(--chart-2))'
+    color: 'var(--chart-2)'
   },
   bonus: {
     label: 'Bonus',
-    color: 'hsl(var(--chart-3))'
+    color: 'var(--chart-3)'
   },
   sampingan: {
     label: 'Sampingan',
-    color: 'hsl(var(--chart-4))'
+    color: 'var(--chart-4)'
   },
   lainya: {
     label: 'Lainya',
-    color: 'hsl(var(--chart-5))'
+    color: 'var(--chart-5)'
   }
 } satisfies ChartConfig
 
@@ -62,6 +62,8 @@ export function ChartCategoryIncome() {
       total: found ? found.total : 0
     }
   })
+
+  const total = React.useMemo(() => chartData.reduce((acc, curr) => acc + curr.total, 0), [chartData])
 
   return (
     <Card>
@@ -103,12 +105,9 @@ export function ChartCategoryIncome() {
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
+      <CardFooter className="text-sm">
         <div className="flex gap-2 leading-none font-medium">
-          Naik sebesar 5,2% bulan ini <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="text-muted-foreground leading-none">
-          Menampilkan total selama 1 bulan terakhir
+          Total pemasukan bulan ini <span className="font-bold underline">{formatRupiah(total)}</span>
         </div>
       </CardFooter>
     </Card>

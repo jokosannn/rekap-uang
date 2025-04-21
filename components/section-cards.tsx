@@ -4,10 +4,9 @@ import {
   IconTrendingDown,
   IconTrendingUp
 } from '@tabler/icons-react'
-import { ArrowDown, ArrowUp, Wallet } from 'lucide-react'
+import { Wallet } from 'lucide-react'
 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { saldo } from '@/constants/saldo'
 import { cn, formatRupiah } from '@/lib/utils'
 import { Summary } from '@/types/summary'
 
@@ -16,9 +15,10 @@ type IProps = {
 }
 
 export function SectionCards({ data }: IProps) {
-  const { current, previous, percentage } = saldo
-  const isUpIncome = data.percentageChange.income >= 0
-  const isUpExpense = data.percentageChange.expense >= 0
+  const percentageIncome = data.current.income.percentageChange
+  const percentageExpnse = data.current.expense.percentageChange
+  const isUpIncome = data.current.income.percentageChange >= 0
+  const isUpExpense = data.current.expense.percentageChange >= 0
 
   return (
     <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @3xl/main:grid-cols-3">
@@ -28,19 +28,28 @@ export function SectionCards({ data }: IProps) {
           <Wallet className="text-muted-foreground h-4 w-4" />
         </CardHeader>
         <CardContent>
-          <div className="text-xl font-bold sm:text-2xl">{formatRupiah(current)}</div>
+          <div className="text-xl font-bold sm:text-2xl">
+            {formatRupiah(data.balance.currentBalance)}
+          </div>
         </CardContent>
         <CardFooter className="mt-2 flex-col items-start text-sm">
           <p
             className={cn(
               'flex items-center gap-1 text-xs',
-              percentage >= 0 ? 'text-emerald-500' : 'text-rose-500'
+              data.balance.percentageChange >= 0 ? 'text-emerald-500' : 'text-rose-500'
             )}
           >
-            {percentage >= 0 ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />}
-            <span>{percentage}% dari bulan lalu</span>
+            {data.balance.percentageChange >= 0 ? (
+              <IconTrendingUp className="h-3 w-3" />
+            ) : (
+              <IconTrendingDown className="h-3 w-3" />
+            )}
+
+            <span>{data.balance.percentageChange}% dari bulan lalu</span>
           </p>
-          <div className="text-muted-foreground text-xs">Bulan lalu {formatRupiah(previous)}</div>
+          <div className="text-muted-foreground text-xs">
+            Bulan lalu {formatRupiah(data.balance.prevBalance)}
+          </div>
         </CardFooter>
       </Card>
       <Card className="gap-0">
@@ -58,13 +67,13 @@ export function SectionCards({ data }: IProps) {
               !isUpIncome ? 'text-rose-500' : 'text-emerald-500'
             )}
           >
-            {isUpExpense ? (
+            {!isUpExpense ? (
               <IconTrendingUp className="h-3 w-3" />
             ) : (
               <IconTrendingDown className="h-3 w-3" />
             )}
 
-            <span>{data.percentageChange.income}% dari bulan lalu</span>
+            <span>{percentageIncome}% dari bulan lalu</span>
           </p>
           <div className="text-muted-foreground text-xs">
             Bulan lalu {formatRupiah(data.previous.income)}
@@ -91,7 +100,7 @@ export function SectionCards({ data }: IProps) {
             ) : (
               <IconTrendingDown className="h-3 w-3" />
             )}
-            <span>{data.percentageChange.expense}% dari bulan lalu</span>
+            <span>{percentageExpnse}% dari bulan lalu</span>
           </p>
           <div className="text-muted-foreground text-xs">
             Bulan lalu {formatRupiah(data.previous.expense)}

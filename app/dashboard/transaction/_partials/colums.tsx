@@ -54,8 +54,8 @@ export const columns: ColumnDef<Transaction>[] = [
           className={cn(
             'rounded-full',
             isIncome
-              ? 'border-emerald-200 bg-emerald-50 text-emerald-500 dark:border-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
-              : 'border-rose-200 bg-rose-50 text-rose-500 dark:border-rose-700 dark:bg-rose-950 dark:text-rose-300'
+              ? 'border-emerald-200 bg-emerald-50 text-emerald-500 dark:border-emerald-700 dark:bg-emerald-950 dark:text-emerald-400'
+              : 'border-rose-200 bg-rose-50 text-rose-500 dark:border-rose-700 dark:bg-rose-950 dark:text-rose-400'
           )}
         >
           {isIncome ? 'Pemasukan' : 'Pengeluaran'}

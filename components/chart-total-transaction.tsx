@@ -35,19 +35,12 @@ const chartConfig = {
 
 export function ChartTotalTransaction() {
   const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig | 'all'>('all')
+  console.log(chartData)
 
   const total = React.useMemo(
     () => ({
       income: chartData.reduce((acc, curr) => acc + curr.income, 0),
       expense: chartData.reduce((acc, curr) => acc + curr.expense, 0)
-    }),
-    [chartData]
-  )
-
-  const totalTransaksi = React.useMemo(
-    () => ({
-      income: chartData.filter(item => item.income),
-      expense: chartData.filter(item => item.expense)
     }),
     [chartData]
   )
@@ -73,9 +66,6 @@ export function ChartTotalTransaction() {
                 <span className="truncate text-lg leading-none font-bold sm:text-2xl">
                   Rp {formatNumber(total[chart])}
                 </span>
-                <span className="text-xs leading-none font-medium sm:text-sm">
-                  {totalTransaksi[chart].length} Transaksi
-                </span>
               </button>
             )
           })}
@@ -85,9 +75,6 @@ export function ChartTotalTransaction() {
             onClick={() => setActiveChart('all')}
           >
             <span className="text-muted-foreground text-xs">All</span>
-            <span className="text-xs leading-none font-medium sm:text-sm">
-              {totalTransaksi['expense'].length + totalTransaksi['income'].length} Transaksi
-            </span>
           </button>
         </div>
       </CardHeader>

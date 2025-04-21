@@ -2,14 +2,13 @@
 
 import * as React from 'react'
 
-import { differenceInDays, format, subDays } from 'date-fns'
+import { format, subDays } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { CalendarIcon } from 'lucide-react'
-import { ArrowDown, ArrowUp } from 'lucide-react'
 import { DateRange } from 'react-day-picker'
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts'
 
-import { Badge } from '@/components/ui/badge'
+import { TransactionHistory } from '@/components/transaction-history'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -23,34 +22,15 @@ import {
 } from '@/components/ui/chart'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import data from '@/constants/transaction.json'
-import { cn, formatNumber } from '@/lib/utils'
-import { getMonthlyCategoryTransactions } from '@/services/transaction-service'
+import { cn, formatNumber, formatRupiah } from '@/lib/utils'
+import {
+  filterTransactions,
+  formatDateRangeDiff,
+  getMonthlyCategoryTransactions
+} from '@/services/transaction-service'
 import { getTransactionHistory } from '@/services/transaction-service'
 import { Transaction } from '@/types/transaction'
-
-function filterExpenseTransactions(data: Transaction[]) {
-  const transactionMap = data.reduce<Record<string, { date: string; pengeluaran: number }>>(
-    (acc, tx) => {
-      if (new Date(tx.date) <= new Date() && tx.type === 'Expense') {
-        const formattedDate = format(new Date(tx.date), 'yyyy-MM-dd')
-        acc[formattedDate] = acc[formattedDate] || { date: formattedDate, pengeluaran: 0 }
-        acc[formattedDate].pengeluaran += tx.amount
-      }
-      return acc
-    },
-    {}
-  )
-
-  return Object.values(transactionMap).sort((a, b) => a.date.localeCompare(b.date))
-}
-
-function formatDateRangeDiff(date: DateRange | undefined): number {
-  if (!date?.from || !date?.to) return 0
-  const diff = differenceInDays(date.to, date.from)
-  return diff
-}
 
 const chartDefault = [
   { kategori: 'jajan', total: 0, fill: 'var(--color-jajan)' },
@@ -61,12 +41,9 @@ const chartDefault = [
 ]
 
 const chartConfig = {
-  visitors: {
-    label: 'Visitors'
-  },
   pengeluaran: {
     label: 'Pengeluaran',
-    color: 'hsl(var(--chart-2))'
+    color: 'var(--chart-2)'
   }
 } satisfies ChartConfig
 
@@ -76,54 +53,67 @@ const chartConfigCategory = {
   },
   jajan: {
     label: 'Jajan',
-    color: 'hsl(var(--chart-1))'
+    color: 'var(--chart-1)'
   },
   transportasi: {
     label: 'Transportasi',
-    color: 'hsl(var(--chart-2))'
+    color: 'var(--chart-2)'
   },
   belanja: {
     label: 'Belanja',
-    color: 'hsl(var(--chart-3))'
+    color: 'var(--chart-3)'
   },
   hiburan: {
     label: 'Hiburan',
-    color: 'hsl(var(--chart-4))'
+    color: 'var(--chart-4)'
   },
   lainya: {
     label: 'Lainya',
-    color: 'hsl(var(--chart-5))'
+    color: 'var(--chart-5)'
   }
 } satisfies ChartConfig
 
 export function ChartExpense() {
-  const firstDate = new Date([...data].sort((a, b) => a.date.localeCompare(b.date))[0].date)
-
+  const [timeRange, setTimeRange] = React.useState<number>(30)
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: subDays(new Date(), 30),
     to: new Date()
   })
 
-  const startTimeLabel = date?.from && format(new Date(date?.from), 'dd MMMM yyyy', { locale: id })
-  const endTimeLabel = date?.to && format(new Date(date?.to), 'dd MMMM yyyy', { locale: id })
-  const days = formatDateRangeDiff(date)
+  const firstDate = new Date([...data].sort((a, b) => a.date.localeCompare(b.date))[0].date) // tanggal terlama
 
-  // console.log(startTimeLabel, endTimeLabel)
+  const startTimeLabel = date?.from && format(new Date(date?.from), 'dd MMMM yyyy', { locale: id }) // label date from
+  const endTimeLabel = date?.to && format(new Date(date?.to), 'dd MMMM yyyy', { locale: id }) // label date to
+  const days = formatDateRangeDiff(date) // jumlah hari
 
-  const [timeRange, setTimeRange] = React.useState<number>(30)
-
-  const chartData = React.useMemo(() => filterExpenseTransactions(data as Transaction[]), [data])
+  // chart
+  const chartData = React.useMemo(() => filterTransactions(data as Transaction[], 'Expense'), [data])
   const filteredData = React.useMemo(() => {
-    const startDate = new Date()
-    startDate.setDate(startDate.getDate() - timeRange)
-    return chartData.filter(item => new Date(item.date) >= startDate)
-  }, [chartData, timeRange])
+    const now = new Date()
+    const startDate = date?.from ?? new Date(now.getFullYear(), now.getMonth(), 1)
+    const endDate = date?.to ?? (date ? startDate : now)
+
+    return chartData.filter(item => {
+      const txDate = new Date(item.date)
+      const isSameDay =
+        !date?.to &&
+        date &&
+        txDate.getFullYear() === startDate.getFullYear() &&
+        txDate.getMonth() === startDate.getMonth() &&
+        txDate.getDate() === startDate.getDate()
+
+      const isInRange = txDate >= startDate && txDate <= endDate
+
+      return isSameDay || isInRange
+    })
+  }, [chartData, timeRange, date])
 
   React.useEffect(() => {
     const diff = formatDateRangeDiff(date)
     setTimeRange(diff)
   }, [date])
 
+  // category
   const summary = getMonthlyCategoryTransactions(data as Transaction[], date)
   const chartDataCategory = chartDefault.map(tx => {
     const found = summary.find(s => s.kategori === tx.kategori)
@@ -133,17 +123,22 @@ export function ChartExpense() {
     }
   })
 
-  const transactions = getTransactionHistory(data as Transaction[], date, 'Expense').slice(0, 5)
+  // history
+  const transactions = getTransactionHistory(data as Transaction[], date, 'Expense')
 
-  console.log(filteredData)
+  // total
+  const total = React.useMemo(
+    () => filteredData.reduce((acc, curr) => acc + curr.pengeluaran, 0),
+    [filteredData]
+  )
 
   return (
     <Card className="@container/card">
       <CardHeader className="flex flex-col items-center gap-2 space-y-0 border-b sm:flex-row">
         <div className="grid flex-1 gap-1 text-center sm:text-left">
-          <CardTitle>Pengeluaran Anda</CardTitle>
+          <CardTitle>Pemasukan Anda</CardTitle>
           <CardDescription>
-            Menampilkan total Pengeluaran periode {startTimeLabel}{' '}
+            Menampilkan total pemasukan periode {startTimeLabel}{' '}
             {endTimeLabel ? `- ${endTimeLabel}` : ''} ({days === 0 ? '1' : days} days)
           </CardDescription>
         </div>
@@ -207,9 +202,29 @@ export function ChartExpense() {
           </Popover>
         </div>
       </CardHeader>
+      <CardHeader>
+        <div className="grid sm:grid-cols-2 md:grid-cols-3">
+          <button
+            data-active={true}
+            className="data-[active=true]:bg-muted/50 relative z-30 flex flex-1 flex-col justify-start gap-2 border-t px-6 py-4 text-left even:border-l sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
+          >
+            <span className="text-muted-foreground text-xs">Total</span>
+            <span className="truncate text-lg leading-none font-bold sm:text-2xl">
+              {formatRupiah(total)}
+            </span>
+          </button>
+        </div>
+      </CardHeader>
       <CardContent className="border-b px-2 pt-4 pb-6 sm:px-6 sm:pt-6">
         <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
-          <AreaChart accessibilityLayer data={filteredData}>
+          <AreaChart
+            accessibilityLayer
+            data={filteredData}
+            margin={{
+              left: 20,
+              right: 40
+            }}
+          >
             <defs>
               <linearGradient id="fillPengeluaran" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="var(--color-pengeluaran)" stopOpacity={0.8} />
@@ -258,9 +273,9 @@ export function ChartExpense() {
       </CardContent>
       <CardContent className="space-y-6 border-b px-2 pt-4 pb-6 sm:px-6 sm:pt-6">
         <div className="flex w-full flex-col items-center justify-center gap-1 text-center">
-          <div className="leading-none font-semibold">Pengeluaran Bulanan</div>
+          <div className="leading-none font-semibold">Pemasukan Bulanan</div>
           <div className="text-muted-foreground text-sm">
-            Pengeluaran berdasarkan sumber periode {startTimeLabel}{' '}
+            Pemasukan berdasarkan sumber periode {startTimeLabel}{' '}
             {endTimeLabel ? `- ${endTimeLabel}` : ''} ({days === 0 ? '1' : days} days)
           </div>
         </div>
@@ -301,66 +316,14 @@ export function ChartExpense() {
       </CardContent>
       <CardContent className="space-y-6 px-2 pt-4 sm:px-6 sm:pt-6">
         <div className="flex w-full flex-col items-center justify-center gap-1 text-center">
-          <div className="leading-none font-semibold">Riwayat Transaksi Pengeluaran</div>
+          <div className="leading-none font-semibold">Riwayat Transaksi Pemasukan</div>
           <div className="text-muted-foreground text-sm">
-            Menampilkan 5 transaksi terbaru periode {startTimeLabel}{' '}
+            Menampilkan max 5 transaksi terbaru periode {startTimeLabel}{' '}
             {endTimeLabel ? `- ${endTimeLabel}` : ''} ({days === 0 ? '1' : days} days)
           </div>
         </div>
 
-        <div className="-mx-6 overflow-x-auto px-6">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Tanggal</TableHead>
-                <TableHead className="table-cell">Tipe</TableHead>
-                <TableHead className="table-cell">Kategori</TableHead>
-                <TableHead className="table-cell">Jumlah</TableHead>
-                <TableHead>Keterangan</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {transactions.map(transaction => (
-                <TableRow key={transaction.id}>
-                  <TableCell className="font-medium">
-                    {format(new Date(transaction.date), 'dd MMMM yyyy', { locale: id })}
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={transaction.type === 'Income' ? 'outline' : 'secondary'}
-                      className={cn(
-                        'rounded-full',
-                        transaction.type === 'Income'
-                          ? 'border-emerald-200 bg-emerald-50 text-emerald-500 dark:border-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
-                          : 'border-rose-200 bg-rose-50 text-rose-500 dark:border-rose-700 dark:bg-rose-950 dark:text-rose-300'
-                      )}
-                    >
-                      {transaction.type === 'Income' ? 'Pemasukan' : 'Pengeluaran'}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="table-cell">{transaction.category}</TableCell>
-                  <TableCell>
-                    <div
-                      className={`flex items-center gap-1 ${
-                        transaction.type === 'Income' ? 'text-emerald-500' : 'text-rose-500'
-                      }`}
-                    >
-                      <span className="whitespace-nowrap">
-                        Rp {transaction.amount.toLocaleString('id-ID')}
-                      </span>
-                      {transaction.type === 'Income' ? (
-                        <ArrowDown className="h-4 w-4" />
-                      ) : (
-                        <ArrowUp className="h-4 w-4" />
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell>{transaction.description}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+        <TransactionHistory transactions={transactions} />
       </CardContent>
     </Card>
   )

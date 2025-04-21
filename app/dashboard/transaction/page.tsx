@@ -23,7 +23,10 @@ export default function TransactionPage() {
       <div className="static z-10 mt-20 px-4 py-4 md:py-6 lg:px-6">
         <Card className="@container/card">
           <CardContent>
-            <DataTable data={data} columns={columns} />
+            <DataTable
+              data={data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())}
+              columns={columns}
+            />
           </CardContent>
         </Card>
       </div>
