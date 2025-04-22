@@ -62,8 +62,6 @@ export function ChartCategoryExpense() {
     }
   })
 
-  console.log(summary)
-
   const total = React.useMemo(() => chartData.reduce((acc, curr) => acc + curr.total, 0), [chartData])
 
   return (

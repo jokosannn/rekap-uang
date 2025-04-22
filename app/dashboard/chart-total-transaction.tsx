@@ -35,7 +35,6 @@ const chartConfig = {
 
 export function ChartTotalTransaction() {
   const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig | 'all'>('all')
-  console.log(chartData)
 
   const total = React.useMemo(
     () => ({
