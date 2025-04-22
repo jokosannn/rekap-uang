@@ -34,6 +34,7 @@ export function checkDateMountComparison() {
   }
 }
 
+// function saldo
 export function getMonthlyComparisonBalance(transactions: Transaction[]) {
   const now = new Date()
   const currentMonth = now.getMonth()
@@ -68,6 +69,7 @@ export function getMonthlyComparisonBalance(transactions: Transaction[]) {
   }
 }
 
+// function perbandingan income, expense dan saldo
 export function getMonthlyComparison(transaction: Transaction[]) {
   const { current, previous } = checkDateMountComparison()
   const saldo = getMonthlyComparisonBalance(transaction)
@@ -125,6 +127,7 @@ export function getMonthlyComparison(transaction: Transaction[]) {
   return summary
 }
 
+// filter semua transaksi income dan expense
 export function filterTransactions(data: Transaction[], type: string) {
   const transactionMapIncome = data.reduce<Record<string, { date: string; pemasukan: number }>>(
     (acc, tx) => {
@@ -155,11 +158,13 @@ export function filterTransactions(data: Transaction[], type: string) {
   )
 }
 
+// format range date
 export function formatDateRangeDiff(date: DateRange | undefined): number {
   if (!date?.from || !date?.to) return 0
   return differenceInDays(date.to, date.from)
 }
 
+// filter income dan expense bulan sekarang
 export function filterCurrentMonthTransactions(transactions: Transaction[]) {
   const now = new Date()
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
@@ -190,6 +195,7 @@ export function filterCurrentMonthTransactions(transactions: Transaction[]) {
   return Object.values(transactionMap).sort((a, b) => a.date.localeCompare(b.date))
 }
 
+// filter kategori income dan expense berdasarkan date
 export function getMonthlyCategoryTransactions(
   transactions: Transaction[],
   date?: DateRange | undefined
@@ -248,6 +254,7 @@ export function getMonthlyCategoryTransactions(
   return Object.values(transactionMap)
 }
 
+// function transaksi histori
 export function getTransactionHistory(
   transactions: Transaction[],
   date: DateRange | undefined,
@@ -276,4 +283,24 @@ export function getTransactionHistory(
     })
     .sort((a, b) => a.date.localeCompare(b.date))
     .slice(-5)
+}
+
+// function filter default transaksi berdasarkan date
+export function getDefaultTransactionByDate(transactions: Transaction[], date: DateRange | undefined) {
+  const now = new Date()
+  const startDate = date?.from ?? new Date(now.getFullYear(), now.getMonth(), 1)
+  const endDate = date?.to ?? (date ? startDate : now)
+
+  return transactions.filter(tx => {
+    const txDate = new Date(tx.date)
+    const isSameDay =
+      !date?.to &&
+      date &&
+      txDate.getFullYear() === startDate.getFullYear() &&
+      txDate.getMonth() === startDate.getMonth() &&
+      txDate.getDate() === startDate.getDate()
+
+    const isInRange = txDate >= startDate && txDate <= endDate
+    return (date && !date.to && isSameDay) || (startDate && endDate && isInRange)
+  })
 }

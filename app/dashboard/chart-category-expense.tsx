@@ -2,7 +2,6 @@
 
 import * as React from 'react'
 
-import { TrendingUp } from 'lucide-react'
 import { Bar, BarChart, LabelList, XAxis, YAxis } from 'recharts'
 
 import {

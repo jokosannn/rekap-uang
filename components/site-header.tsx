@@ -7,14 +7,7 @@ import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 
 import { ModeToggle } from './mode-toggle'
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator
-} from './ui/breadcrumb'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from './ui/breadcrumb'
 
 export function SiteHeader() {
   return (
@@ -29,9 +22,8 @@ export function SiteHeader() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        {/* <h1 className="text-base font-medium">Dashboard</h1> */}
         <div className="ml-auto flex items-center gap-2">
-          {/* <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
+          <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
             <a
               href="https://github.com/shadcn-ui/ui/tree/main/apps/v4/app/(examples)/dashboard"
               rel="noopener noreferrer"
@@ -40,7 +32,7 @@ export function SiteHeader() {
             >
               GitHub
             </a>
-          </Button> */}
+          </Button>
 
           <ModeToggle />
         </div>

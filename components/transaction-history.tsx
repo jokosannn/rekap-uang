@@ -5,9 +5,7 @@ import { ArrowDown, ArrowUp } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import data from '@/constants/transaction.json'
 import { cn } from '@/lib/utils'
-import { getTransactionHistory } from '@/services/transaction-service'
 import { Transaction } from '@/types/transaction'
 
 import { Button } from './ui/button'

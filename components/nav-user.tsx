@@ -2,14 +2,7 @@
 
 import Link from 'next/link'
 
-import {
-  IconCreditCard,
-  IconDotsVertical,
-  IconLogout,
-  IconNotification,
-  IconSettings,
-  IconUserCircle
-} from '@tabler/icons-react'
+import { IconDotsVertical, IconLogout, IconUserCircle } from '@tabler/icons-react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {

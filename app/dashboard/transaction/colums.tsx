@@ -1,45 +1,57 @@
 'use client'
 
 import { ColumnDef } from '@tanstack/react-table'
+import { format } from 'date-fns'
 import { ArrowDown, ArrowUp } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { cn, formatRupiah } from '@/lib/utils'
+import { Transaction } from '@/schema/transaction-schema'
 
 import { DataTableColumnHeader } from './data-table-column-header'
-import { Transaction } from './schema'
 import TableCellViewer from './table-cell-viewer'
 
 export const columns: ColumnDef<Transaction>[] = [
-  // {
-  //   id: 'select',
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={
-  //         table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')
-  //       }
-  //       onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all"
-  //       className="translate-y-[2px]"
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={value => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //       className="mr-4 translate-y-[2px]"
-  //     />
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false
-  // },
+  {
+    id: 'select',
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')
+        }
+        onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+        className="translate-y-[2px]"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={value => row.toggleSelected(!!value)}
+        aria-label="Select row"
+        className="translate-y-[2px]"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false
+  },
   {
     accessorKey: 'date',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Tanggal" />,
     cell: ({ row }) => {
       return <TableCellViewer item={row.original} />
+    },
+    filterFn: (row, columnId, filterValue: { from: Date; to?: Date }) => {
+      const rowDateStr = format(new Date(row.getValue(columnId)), 'yyyy-MM-dd')
+      const fromDateStr = format(filterValue.from, 'yyyy-MM-dd')
+
+      if (filterValue.to) {
+        const toDateStr = format(filterValue.to, 'yyyy-MM-dd')
+        return rowDateStr >= fromDateStr && rowDateStr <= toDateStr
+      }
+
+      return rowDateStr === fromDateStr
     }
   },
   {
@@ -109,8 +121,4 @@ export const columns: ColumnDef<Transaction>[] = [
     header: ({ column }) => <DataTableColumnHeader column={column} title="Keterangan" />,
     enableSorting: false
   }
-  // {
-  //   id: 'actions',
-  //   cell: ({ row }) => <DataTableRowActions row={row} />
-  // }
 ]

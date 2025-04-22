@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 
 import { TrendingUp } from 'lucide-react'
@@ -5,8 +7,8 @@ import { TrendingUp } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import data from '@/constants/transaction.json'
 
-import { columns } from './_partials/colums'
-import { DataTable } from './_partials/date-table'
+import { columns } from './colums'
+import { DataTable } from './date-table'
 
 export default function TransactionPage() {
   return (

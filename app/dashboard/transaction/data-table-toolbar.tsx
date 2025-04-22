@@ -2,10 +2,10 @@
 
 import * as React from 'react'
 
-import { IconFilter, IconPlus } from '@tabler/icons-react'
+import { IconFilter } from '@tabler/icons-react'
 import { Table } from '@tanstack/react-table'
-import { addDays, format } from 'date-fns'
-import { CalendarIcon, Download, X } from 'lucide-react'
+import { format, subDays } from 'date-fns'
+import { CalendarIcon, X } from 'lucide-react'
 import { DateRange } from 'react-day-picker'
 
 import { TransactionForm } from '@/components/transaction-form'
@@ -17,37 +17,54 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { cn } from '@/lib/utils'
 
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
-import { DataTableViewOptions } from './data-table-view-options'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
 }
 
 export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>) {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(2025, 0, 1),
-    to: addDays(new Date(2025, 1, 1), 27)
-  })
+  const [date, setDate] = React.useState<DateRange | undefined>(undefined)
   const isFiltered = table.getState().columnFilters.length > 0
+
   const payments = [...new Set(table.options.data.map((v: any) => v.paymentMethod))].map(item => ({
     label: item,
     value: item
   }))
+
   const types = [...new Set(table.options.data.map((v: any) => v.type))].map(item => ({
     label: item,
     value: item
   }))
+
   const category = [...new Set(table.options.data.map((v: any) => v.category))].map(item => ({
     label: item,
     value: item
   }))
+
+  React.useEffect(() => {
+    if (date?.from && date?.to) {
+      table.getColumn('date')?.setFilterValue({
+        from: date.from,
+        to: date.to
+      })
+    } else if (date?.from && !date.to) {
+      table.getColumn('date')?.setFilterValue({
+        from: date.from,
+        to: date.from
+      })
+    } else {
+      table.getColumn('date')?.setFilterValue(undefined)
+    }
+  }, [date])
+
+  console.log(date)
 
   return (
     <div className="flex flex-col items-start justify-between gap-4 lg:flex-row">
       <div className="flex w-full flex-1 flex-col items-start justify-start gap-4">
         <div className="flex w-full shrink-0 gap-2">
           <Input
-            placeholder="Filter transaksi..."
+            placeholder="Cari Transaksi"
             value={(table.getColumn('description')?.getFilterValue() as string) ?? ''}
             onChange={event => table.getColumn('description')?.setFilterValue(event.target.value)}
             className="max-w-xl"
@@ -55,8 +72,8 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
           <Popover>
             <PopoverTrigger asChild>
               <Button className="justify-start">
+                <span className="hidden md:block">Filters</span>
                 <IconFilter />
-                {/* <span className="hidden lg:block">Filters</span> */}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-fit" align="end">
@@ -124,12 +141,12 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="flex w-auto flex-col space-y-2 p-2" align="start">
+            <PopoverContent className="flex w-auto flex-col space-y-2 p-2" align="end">
               <Select
                 onValueChange={value =>
                   setDate({
-                    from: new Date(),
-                    to: addDays(new Date(), parseInt(value))
+                    from: subDays(new Date(), parseInt(value)),
+                    to: new Date()
                   })
                 }
               >
@@ -137,10 +154,10 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="0">Today</SelectItem>
-                  <SelectItem value="1">Tomorrow</SelectItem>
-                  <SelectItem value="3">In 3 days</SelectItem>
-                  <SelectItem value="7">In a week</SelectItem>
+                  <SelectItem value="0">Hari ini</SelectItem>
+                  <SelectItem value="1">Kemarin</SelectItem>
+                  <SelectItem value="7">7 hari terakhir</SelectItem>
+                  <SelectItem value="30">1 bulan terakhir</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -152,16 +169,14 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
                   selected={date}
                   onSelect={setDate}
                   numberOfMonths={2}
+                  disabled={date => date > new Date()}
                 />
               </div>
             </PopoverContent>
           </Popover>
         </div>
-        <Button>
-          <Download />
-        </Button>
+        <TransactionForm />
       </div>
-      <TransactionForm />
     </div>
   )
 }

@@ -5,7 +5,6 @@ import * as React from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
-import { CalendarIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -23,19 +22,12 @@ import {
 } from '@/components/ui/drawer'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { useIsMobile } from '@/hooks/use-mobile'
-import { cn } from '@/lib/utils'
-
-import { transactionSchema } from './schema'
+import { transactionSchema } from '@/schema/transaction-schema'
 
 const FormSchema = z.object({
-  // username: z.string().min(2, {
-  //   message: 'Username must be at least 2 characters.'
-  // }),
   date: z.date(),
   type: z.string().min(1, 'Wajib diisi😤'),
   category: z.string().min(1, 'Wajib diisi😤'),
@@ -68,7 +60,6 @@ const paymentMethod = [
 
 export default function TableCellViewer({ item }: { item: z.infer<typeof transactionSchema> }) {
   const isMobile = useIsMobile()
-  const [date, setDate] = React.useState<Date>()
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),

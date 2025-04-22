@@ -131,19 +131,6 @@ export default function ProfilePage() {
               <CardTitle className="text-center">Budi Santoso</CardTitle>
               <span className="truncate text-center">budi.santoso@example.com</span>
             </CardHeader>
-            {/* <CardContent>
-              <Separator className="my-4" />
-              <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <User className="text-muted-foreground h-4 w-4 shrink-0" />
-                  <span>Software Developer</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Mail className="text-muted-foreground h-4 w-4 shrink-0" />
-                  <span className="truncate">budi.santoso@example.com</span>
-                </div>
-              </div>
-            </CardContent> */}
           </Card>
 
           {/* Settings Tabs */}

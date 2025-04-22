@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconPlus } from '@tabler/icons-react'
 import { format } from 'date-fns'
-import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-react'
+import { BadgePlus, CalendarIcon, Check, ChevronsUpDown } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -100,7 +100,7 @@ export function TransactionForm() {
     <Dialog>
       <DialogTrigger asChild>
         <Button>
-          Tambah Transaksi <IconPlus />
+          <span className="hidden sm:block">Tambah Transaksi</span> <BadgePlus />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[575px]">
