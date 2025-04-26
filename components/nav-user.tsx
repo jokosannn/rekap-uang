@@ -3,6 +3,7 @@
 import Link from 'next/link'
 
 import { IconDotsVertical, IconLogout, IconUserCircle } from '@tabler/icons-react'
+import { signOut, useSession } from 'next-auth/react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
@@ -16,16 +17,20 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar'
 
-export function NavUser({
-  user
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
-}) {
+export function NavUser() {
   const { isMobile } = useSidebar()
+
+  const { data, status } = useSession()
+
+  if (status === 'loading') {
+    return <p>Loading...</p>
+  }
+
+  const user = data?.user
+
+  if (!user) {
+    return <p>Unauthenticated...</p>
+  }
 
   return (
     <SidebarMenu>
@@ -37,7 +42,7 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg grayscale">
-                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarImage src={user.image as string} alt={user.name as string} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -56,7 +61,7 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarImage src={user.image as string} alt={user.name as string} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -68,14 +73,14 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
-                <Link href={`/dashboard/profile/3434343`}>
+                <Link href={`/dashboard/profile`}>
                   <IconUserCircle />
                   Akun
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => signOut()}>
               <IconLogout />
               Keluar
             </DropdownMenuItem>

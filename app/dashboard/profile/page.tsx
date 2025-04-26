@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Check, ChevronsUpDown, LogOut, Mail, Moon, Sun, User } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 import { useTheme } from 'next-themes'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -81,29 +82,55 @@ const accountFormSchema = z.object({
 
 type AccountFormValues = z.infer<typeof accountFormSchema>
 
-// This can come from your database or API.
-const defaultValues: Partial<AccountFormValues> = {
-  name: 'Budi Santoso',
-  email: 'budi.santoso@example.com'
-}
-
 export default function ProfilePage() {
+  const { data: session, status, update } = useSession()
+  const { setTheme, theme } = useTheme()
+
   const [languageOpen, setLanguageOpen] = useState(false)
   const [language, setLanguage] = useState('id')
 
   const [currencyOpen, setCurrencyOpen] = useState(false)
   const [currency, setCurrency] = useState('IDR')
 
-  const { setTheme, theme } = useTheme()
+  const [message, setMessage] = useState('')
 
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
-    defaultValues
+    defaultValues: {
+      name: '',
+      email: ''
+    }
   })
 
-  function onSubmit(data: AccountFormValues) {
-    // This would usually be a server action or API call
-    console.log(data)
+  useEffect(() => {
+    if (session?.user) {
+      form.reset({
+        name: session.user.name || '',
+        email: session.user.email || ''
+      })
+    }
+  }, [session, form])
+
+  async function onSubmit(data: AccountFormValues) {
+    setMessage('')
+
+    const response = await fetch('/api/user', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email
+      })
+    })
+
+    if (!response.status) {
+      setMessage('Gagal updated')
+    } else {
+      await update()
+    }
+  }
+
+  if (status === 'loading') {
+    return <p>Loading...</p>
   }
 
   return (
@@ -125,11 +152,11 @@ export default function ProfilePage() {
           <Card className="overflow-hidden md:w-1/3">
             <CardHeader>
               <Avatar className="mx-auto mb-4 h-24 w-24">
-                <AvatarImage src="/placeholder.svg?height=96&width=96" alt="Profile picture" />
+                <AvatarImage src={session?.user?.image as string} alt="Profile picture" />
                 <AvatarFallback>BS</AvatarFallback>
               </Avatar>
-              <CardTitle className="text-center">Budi Santoso</CardTitle>
-              <span className="truncate text-center">budi.santoso@example.com</span>
+              <CardTitle className="text-center">{session?.user?.name}</CardTitle>
+              <span className="truncate text-center">{session?.user?.email}</span>
             </CardHeader>
           </Card>
 

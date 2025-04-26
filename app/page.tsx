@@ -1,10 +1,5 @@
-import { Button } from '@/components/ui/button'
+import { redirect } from 'next/navigation'
 
-export default function Home() {
-  return (
-    <>
-      <h1 className="text-xl">Hello World</h1>
-      <Button>Click</Button>
-    </>
-  )
+export default async function Home() {
+  return redirect('/dashboard')
 }

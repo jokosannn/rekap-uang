@@ -11,6 +11,7 @@ import {
   IconMoneybagPlus
 } from '@tabler/icons-react'
 import { TrendingUp } from 'lucide-react'
+import { getSession, useSession } from 'next-auth/react'
 
 import { NavMain } from '@/components/nav-main'
 import { NavUser } from '@/components/nav-user'
@@ -55,6 +56,8 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  // const { data: user } = useSession()
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -73,7 +76,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   )

@@ -57,8 +57,6 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
     }
   }, [date])
 
-  console.log(date)
-
   return (
     <div className="flex flex-col items-start justify-between gap-4 lg:flex-row">
       <div className="flex w-full flex-1 flex-col items-start justify-start gap-4">
