@@ -6,6 +6,7 @@ import { prisma } from '@/lib/prisma/init'
 import { loginWithGoogle } from './auth-service'
 
 interface CustomSessionUser {
+  id: string
   name: string
   email: string
   image: string
@@ -36,10 +37,12 @@ export const authOptions: NextAuthOptions = {
         })
 
         if (userFromDb) {
+          user.id = userFromDb.id
           user.name = userFromDb.name
           user.email = userFromDb.email
           user.image = userFromDb.image
         } else {
+          user.id = token.id as string
           user.name = token.name as string
           user.email = token.email as string
           user.image = token.image as string
@@ -60,6 +63,7 @@ export const authOptions: NextAuthOptions = {
           const result = await loginWithGoogle(data)
 
           if (result.status) {
+            token.id = result.data.id
             token.name = result.data.username
             token.email = result.data.email
             token.image = result.data.image

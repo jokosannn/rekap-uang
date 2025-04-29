@@ -2,6 +2,8 @@
 
 import * as React from 'react'
 
+import { useQuery } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
 import { Bar, BarChart, LabelList, XAxis, YAxis } from 'recharts'
 
 import {
@@ -13,9 +15,8 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
-import data from '@/constants/transaction.json'
 import { formatNumber, formatRupiah } from '@/lib/utils'
-import { getMonthlyCategoryTransactions } from '@/services/transaction-service'
+import { fetchTransactions, getMonthlyCategoryTransactions } from '@/services/transaction-service'
 import { Transaction } from '@/types/transaction'
 
 const chartDefault = [
@@ -23,7 +24,7 @@ const chartDefault = [
   { kategori: 'sampingan', total: 0, fill: 'var(--color-sampingan)' },
   { kategori: 'bonus', total: 0, fill: 'var(--color-bonus)' },
   { kategori: 'investasi', total: 0, fill: 'var(--color-investasi)' },
-  { kategori: 'lainya', total: 0, fill: 'var(--color-lainya)' }
+  { kategori: 'lainnya', total: 0, fill: 'var(--color-lainnya)' }
 ]
 
 const chartConfig = {
@@ -46,14 +47,27 @@ const chartConfig = {
     label: 'Sampingan',
     color: 'var(--chart-4)'
   },
-  lainya: {
-    label: 'Lainya',
+  lainnya: {
+    label: 'Lainnya',
     color: 'var(--chart-5)'
   }
 } satisfies ChartConfig
 
 export function ChartCategoryIncome() {
-  const summary = getMonthlyCategoryTransactions(data as Transaction[])
+  const { data: session, status }: any = useSession()
+
+  const {
+    data: results,
+    isPending,
+    isFetching
+  } = useQuery({ queryKey: ['transactions'], queryFn: fetchTransactions })
+
+  const isLoading = isPending || isFetching || status === 'loading'
+  if (isLoading) return <p>Loading...</p>
+
+  const data = results.filter((v: any) => v.userId === session?.user.id)
+
+  const summary = getMonthlyCategoryTransactions(data as Transaction[], 'Income')
   const chartData = chartDefault.map(tx => {
     const found = summary.find(s => s.kategori === tx.kategori)
     return {
@@ -63,6 +77,8 @@ export function ChartCategoryIncome() {
   })
 
   const total = React.useMemo(() => chartData.reduce((acc, curr) => acc + curr.total, 0), [chartData])
+
+  console.log(chartData)
 
   return (
     <Card>

@@ -1,11 +1,12 @@
+'use client'
+
 import { TrendingUp } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 
-import serverSession from '@/lib/session'
+export default function HeaderContent() {
+  const { data: user } = useSession()
 
-export default async function HeaderContent() {
-  const user = await serverSession()
-
-  if (!user) {
+  if (!user?.user) {
     return <p>Loading...</p>
   }
 
@@ -15,7 +16,7 @@ export default async function HeaderContent() {
         <TrendingUp className="size-12" />
         <div className="flex flex-col">
           <span className="text-lg font-medium">Hai,</span>
-          <span className="text-2xl font-bold">{user.name}</span>
+          <span className="text-2xl font-bold">{user.user.name}</span>
         </div>
       </div>
     </div>

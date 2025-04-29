@@ -1,3 +1,8 @@
+'use client'
+
+import { useQuery } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
+
 import { ChartCategoryExpense } from '@/app/dashboard/chart-category-expense'
 import { ChartCategoryIncome } from '@/app/dashboard/chart-category-income'
 import { ChartTotalTransaction } from '@/app/dashboard/chart-total-transaction'
@@ -5,16 +10,30 @@ import { SectionCards } from '@/app/dashboard/section-cards'
 import HeaderContent from '@/components/header-content'
 import { TransactionHistory } from '@/components/transaction-history'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import data from '@/constants/transaction.json'
-import { getMonthlyComparison, getTransactionHistory } from '@/services/transaction-service'
+import {
+  fetchTransactions,
+  getMonthlyComparison,
+  getTransactionHistory
+} from '@/services/transaction-service'
 import { Transaction } from '@/types/transaction'
 
 export default function Page() {
-  const summary = getMonthlyComparison(
-    data.sort((a, b) => a.date.localeCompare(b.date)) as Transaction[]
-  )
+  const { data: session, status }: any = useSession()
 
-  const transactions = getTransactionHistory(data as Transaction[], undefined, undefined)
+  const {
+    data: results,
+    isPending,
+    isFetching
+  } = useQuery({ queryKey: ['transactions'], queryFn: fetchTransactions })
+
+  const isLoading = isPending || isFetching || status === 'loading'
+  if (isLoading) return <p>Loading...</p>
+
+  const filteredData = results.filter((v: any) => v.userId === session?.user.id)
+  const sortedData = filteredData.sort((a: any, b: any) => a.date.localeCompare(b.date))
+
+  const summary = getMonthlyComparison(sortedData as Transaction[])
+  const transactions = getTransactionHistory(filteredData as Transaction[])
 
   return (
     <div className="@container/main relative flex flex-1 flex-col gap-2">

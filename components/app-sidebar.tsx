@@ -11,7 +11,6 @@ import {
   IconMoneybagPlus
 } from '@tabler/icons-react'
 import { TrendingUp } from 'lucide-react'
-import { getSession, useSession } from 'next-auth/react'
 
 import { NavMain } from '@/components/nav-main'
 import { NavUser } from '@/components/nav-user'

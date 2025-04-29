@@ -3,13 +3,14 @@
 import { useEffect, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Check, ChevronsUpDown, LogOut, Mail, Moon, Sun, User } from 'lucide-react'
-import { useSession } from 'next-auth/react'
+import { Check, ChevronsUpDown, LogOut, Moon, Sun } from 'lucide-react'
+import { signOut, useSession } from 'next-auth/react'
 import { useTheme } from 'next-themes'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import Image from '@/components/image'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -92,8 +93,6 @@ export default function ProfilePage() {
   const [currencyOpen, setCurrencyOpen] = useState(false)
   const [currency, setCurrency] = useState('IDR')
 
-  const [message, setMessage] = useState('')
-
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
     defaultValues: {
@@ -112,8 +111,6 @@ export default function ProfilePage() {
   }, [session, form])
 
   async function onSubmit(data: AccountFormValues) {
-    setMessage('')
-
     const response = await fetch('/api/user', {
       method: 'POST',
       body: JSON.stringify({
@@ -122,9 +119,12 @@ export default function ProfilePage() {
       })
     })
 
-    if (!response.status) {
-      setMessage('Gagal updated')
+    const result: any = await response.json()
+
+    if (!response.ok) {
+      toast.error(result.message)
     } else {
+      toast.success(result.message)
       await update()
     }
   }
@@ -141,7 +141,7 @@ export default function ProfilePage() {
             <h1 className="text-3xl font-bold tracking-tight">Profil Akun</h1>
             <p className="text-muted-foreground">Kelola informasi profil dan pengaturan akun Anda</p>
           </div>
-          <Button variant="outline" className="gap-2">
+          <Button onClick={() => signOut()} variant="outline" className="gap-2">
             <LogOut className="h-4 w-4" />
             Keluar
           </Button>
@@ -151,10 +151,19 @@ export default function ProfilePage() {
           {/* Profile Card */}
           <Card className="overflow-hidden md:w-1/3">
             <CardHeader>
-              <Avatar className="mx-auto mb-4 h-24 w-24">
+              {/* <Avatar className="mx-auto mb-4 h-24 w-24">
                 <AvatarImage src={session?.user?.image as string} alt="Profile picture" />
                 <AvatarFallback>BS</AvatarFallback>
-              </Avatar>
+              </Avatar> */}
+              <div className="mx-auto mb-4 h-24 w-24 overflow-hidden rounded-full">
+                <Image
+                  src={session?.user?.image as string}
+                  alt="Profile picture"
+                  width={100}
+                  height={100}
+                  className="aspect-square size-full"
+                />
+              </div>
               <CardTitle className="text-center">{session?.user?.name}</CardTitle>
               <span className="truncate text-center">{session?.user?.email}</span>
             </CardHeader>
@@ -251,7 +260,7 @@ export default function ProfilePage() {
                     <div className="space-y-2">
                       <Label htmlFor="language">Bahasa</Label>
                       <Popover open={languageOpen} onOpenChange={setLanguageOpen}>
-                        <PopoverTrigger asChild>
+                        <PopoverTrigger asChild disabled>
                           <Button
                             id="language"
                             variant="outline"
@@ -300,7 +309,7 @@ export default function ProfilePage() {
                     <div className="space-y-2">
                       <Label htmlFor="currency">Mata Uang</Label>
                       <Popover open={currencyOpen} onOpenChange={setCurrencyOpen}>
-                        <PopoverTrigger asChild>
+                        <PopoverTrigger asChild disabled>
                           <Button
                             id="currency"
                             variant="outline"
@@ -346,7 +355,7 @@ export default function ProfilePage() {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <Button>Simpan Preferensi</Button>
+                    <Button disabled>Simpan Preferensi</Button>
                   </CardFooter>
                 </Card>
               </TabsContent>

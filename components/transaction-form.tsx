@@ -1,34 +1,27 @@
 'use client'
 
+import { useState } from 'react'
+
 import { zodResolver } from '@hookform/resolvers/zod'
-import { IconPlus } from '@tabler/icons-react'
 import { format } from 'date-fns'
-import { BadgePlus, CalendarIcon, Check, ChevronsUpDown } from 'lucide-react'
+import { BadgePlus } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog'
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import data from '@/constants/transaction.json'
-import { cn } from '@/lib/utils'
+import { useMutationData } from '@/hooks/use-mutation'
 
 import { Calendar } from './ui/calendar'
 import { ScrollArea } from './ui/scroll-area'
@@ -36,9 +29,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Textarea } from './ui/textarea'
 
 const FormSchema = z.object({
-  // username: z.string().min(2, {
-  //   message: 'Username must be at least 2 characters.'
-  // }),
   date: z.date(),
   type: z.string().min(1, 'Wajib diisi😤'),
   category: z.string().min(1, 'Wajib diisi😤'),
@@ -70,15 +60,14 @@ const paymentMethod = [
 ]
 
 export function TransactionForm() {
-  // const categories = [...new Set(data.map((v: any) => v.category))].map(item => ({
-  //   label: item,
-  //   value: item
-  // }))
+  const mutation: any = useMutationData({
+    func: onSubmit,
+    queryKey: ['transactions']
+  })
 
-  // const paymentMethod = [...new Set(data.map((v: any) => v.paymentMethod))].map(item => ({
-  //   label: item,
-  //   value: item
-  // }))
+  const { data: session }: any = useSession()
+
+  const [open, setOpen] = useState(false)
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -92,12 +81,27 @@ export function TransactionForm() {
     }
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data)
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    const response = await fetch('/api/transaction', {
+      method: 'POST',
+      body: JSON.stringify({
+        ...data,
+        userId: session?.user?.id
+      })
+    })
+    const result: any = await response.json()
+
+    if (!response.ok) {
+      toast.error(result.message)
+    } else {
+      toast.success(result.message)
+      setOpen(false)
+      form.reset()
+    }
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
           <span className="hidden sm:block">Tambah Transaksi</span> <BadgePlus />
@@ -105,16 +109,11 @@ export function TransactionForm() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[575px]">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(mutation.mutate)} className="space-y-6">
             <DialogHeader>
               <DialogTitle>Buat Transaksi</DialogTitle>
-              {/* <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription> */}
             </DialogHeader>
             <ScrollArea className="h-[300px] w-full sm:aspect-video">
-              {/* <p>{JSON.stringify(paymentMethod)}</p> */}
-
               <div className="space-y-6">
                 <FormField
                   control={form.control}

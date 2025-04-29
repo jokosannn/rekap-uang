@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import { Bricolage_Grotesque, Geist, Geist_Mono } from 'next/font/google'
 
+import { Toaster } from 'sonner'
+
 import AuthProvider from '@/components/auth-provider'
+import TanstackQueryProvider from '@/components/tanstack-provider'
 import { ThemeProvider } from '@/components/theme-provider'
 
 import './globals.css'
@@ -34,9 +37,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <AuthProvider>{children}</AuthProvider>
-        </ThemeProvider>
+        <TanstackQueryProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <AuthProvider>
+              <Toaster expand={true} richColors position="top-right" />
+              {children}
+            </AuthProvider>
+          </ThemeProvider>
+        </TanstackQueryProvider>
       </body>
     </html>
   )

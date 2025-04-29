@@ -2,6 +2,8 @@
 
 import * as React from 'react'
 
+import { useQuery } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -13,14 +15,11 @@ import {
   ChartTooltip,
   ChartTooltipContent
 } from '@/components/ui/chart'
-import data from '@/constants/transaction.json'
 import { formatNumber } from '@/lib/utils'
-import { filterCurrentMonthTransactions } from '@/services/transaction-service'
+import { fetchTransactions, filterCurrentMonthTransactions } from '@/services/transaction-service'
 import { Transaction } from '@/types/transaction'
 
 export const description = 'An interactive area chart'
-
-const chartData = filterCurrentMonthTransactions(data as Transaction[])
 
 const chartConfig = {
   income: {
@@ -34,6 +33,20 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function ChartTotalTransaction() {
+  const { data: session, status }: any = useSession()
+
+  const {
+    data: results,
+    isPending,
+    isFetching
+  } = useQuery({ queryKey: ['transactions'], queryFn: fetchTransactions })
+
+  const isLoading = isPending || isFetching || status === 'loading'
+  if (isLoading) return <p>Loading...</p>
+
+  const data = results.filter((v: any) => v.userId === session?.user.id)
+
+  const chartData = filterCurrentMonthTransactions(data as Transaction[])
   const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig | 'all'>('all')
 
   const total = React.useMemo(

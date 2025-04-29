@@ -1,7 +1,14 @@
 import { differenceInDays, format } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 
+import { prisma } from '@/lib/prisma/init'
 import { Transaction } from '@/types/transaction'
+
+interface ResponseResult {
+  status: boolean
+  message: string
+  data?: any
+}
 
 // persentase
 const calcPercentage = (current: number, previous: number): number => {
@@ -198,6 +205,7 @@ export function filterCurrentMonthTransactions(transactions: Transaction[]) {
 // filter kategori income dan expense berdasarkan date
 export function getMonthlyCategoryTransactions(
   transactions: Transaction[],
+  type: string,
   date?: DateRange | undefined
 ) {
   const now = new Date()
@@ -209,7 +217,7 @@ export function getMonthlyCategoryTransactions(
     Sampingan: 'sampingan',
     Bonus: 'bonus',
     Investasi: 'investasi',
-    Lainya: 'lainya'
+    Lainnya: 'lainnya'
   }
 
   const expenseCategories = {
@@ -217,37 +225,39 @@ export function getMonthlyCategoryTransactions(
     Transportasi: 'transportasi',
     Belanja: 'belanja',
     Hiburan: 'hiburan',
-    Lainya: 'lainya'
+    Lainnya: 'lainnya'
   }
 
   const transactionMap: Record<string, { kategori: string; total: number; fill: string }> = {}
 
   transactions.forEach(tx => {
-    const txDate = new Date(tx.date)
-    const isSameDay =
-      !date?.to &&
-      date &&
-      txDate.getFullYear() === startDate.getFullYear() &&
-      txDate.getMonth() === startDate.getMonth() &&
-      txDate.getDate() === startDate.getDate()
+    if (type === tx.type) {
+      const txDate = new Date(tx.date)
+      const isSameDay =
+        !date?.to &&
+        date &&
+        txDate.getFullYear() === startDate.getFullYear() &&
+        txDate.getMonth() === startDate.getMonth() &&
+        txDate.getDate() === startDate.getDate()
 
-    const isInRange = txDate >= startDate && txDate <= endDate
+      const isInRange = txDate >= startDate && txDate <= endDate
 
-    if ((date && !date.to && isSameDay) || (startDate && endDate && isInRange)) {
-      const categoryMap = tx.type === 'Income' ? incomeCategories : expenseCategories
-      const mappedCategory = categoryMap[tx.category as keyof typeof categoryMap]
+      if ((date && !date.to && isSameDay) || (startDate && endDate && isInRange)) {
+        const categoryMap = type === 'Income' ? incomeCategories : expenseCategories
+        const mappedCategory = categoryMap[tx.category as keyof typeof categoryMap]
 
-      if (!mappedCategory) return
+        if (!mappedCategory) return
 
-      if (!transactionMap[tx.category]) {
-        transactionMap[tx.category] = {
-          kategori: mappedCategory,
-          total: 0,
-          fill: `var(--color-${tx.category.toLowerCase()})`
+        if (!transactionMap[tx.category]) {
+          transactionMap[tx.category] = {
+            kategori: mappedCategory,
+            total: 0,
+            fill: `var(--color-${tx.category.toLowerCase()})`
+          }
         }
-      }
 
-      transactionMap[tx.category].total += tx.amount
+        transactionMap[tx.category].total += tx.amount
+      }
     }
   })
 
@@ -257,8 +267,8 @@ export function getMonthlyCategoryTransactions(
 // function transaksi histori
 export function getTransactionHistory(
   transactions: Transaction[],
-  date: DateRange | undefined,
-  type: string | undefined
+  date?: DateRange | undefined,
+  type?: string | undefined
 ) {
   const now = new Date()
   const startOfMonth = date?.from ?? new Date(now.getFullYear(), now.getMonth(), 1)
@@ -303,4 +313,92 @@ export function getDefaultTransactionByDate(transactions: Transaction[], date: D
     const isInRange = txDate >= startDate && txDate <= endDate
     return (date && !date.to && isSameDay) || (startDate && endDate && isInRange)
   })
+}
+
+export async function getAllTransaction() {
+  try {
+    const response = await prisma.transaction.findMany()
+    return {
+      status: true,
+      message: 'Transaksi berhasil diambil',
+      data: response
+    }
+  } catch (error) {
+    return {
+      status: false,
+      message: error instanceof Error ? error.message : 'Unknown error'
+    }
+  }
+}
+
+export async function createNewTransaction(data: any): Promise<ResponseResult> {
+  try {
+    const newTransaction = await prisma.transaction.create({
+      data: {
+        ...data,
+        userId: data.userId
+      }
+    })
+
+    return {
+      status: true,
+      message: 'Transaksi berhasil dibuat',
+      data: newTransaction
+    }
+  } catch (error) {
+    return {
+      status: false,
+      message: error instanceof Error ? error.message : 'Unknown error'
+    }
+  }
+}
+
+export async function updateTransaction(data: any): Promise<ResponseResult> {
+  try {
+    const newTransaction = await prisma.transaction.update({
+      where: { id: data.id },
+      data: {
+        ...data
+      }
+    })
+
+    return {
+      status: true,
+      message: 'Transaksi berhasil diupdate',
+      data: newTransaction
+    }
+  } catch (error) {
+    return {
+      status: false,
+      message: error instanceof Error ? error.message : 'Unknown error'
+    }
+  }
+}
+
+export async function deleteTransaction(ids: string[]): Promise<ResponseResult> {
+  try {
+    await prisma.transaction.deleteMany({
+      where: {
+        id: {
+          in: ids
+        }
+      }
+    })
+
+    return {
+      status: true,
+      message: 'Transaksi berhasil dihapus'
+    }
+  } catch (error) {
+    return {
+      status: false,
+      message: error instanceof Error ? error.message : 'Unknown error'
+    }
+  }
+}
+
+export async function fetchTransactions() {
+  const res = await fetch('/api/transaction')
+  const json = await res.json()
+  return json.data
 }

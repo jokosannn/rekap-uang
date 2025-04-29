@@ -5,14 +5,15 @@ import * as React from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
+import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerFooter,
@@ -25,6 +26,7 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { useMutationData } from '@/hooks/use-mutation'
 import { transactionSchema } from '@/schema/transaction-schema'
 
 const FormSchema = z.object({
@@ -61,24 +63,49 @@ const paymentMethod = [
 export default function TableCellViewer({ item }: { item: z.infer<typeof transactionSchema> }) {
   const isMobile = useIsMobile()
 
+  const mutation: any = useMutationData({
+    func: onSubmit,
+    queryKey: ['transactions']
+  })
+
+  const { data: session }: any = useSession()
+
+  const [open, setOpen] = React.useState(false)
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      date: new Date(),
-      type: '',
-      category: '',
-      paymentMethod: '',
-      amount: 0,
-      description: ''
+      date: new Date(item.date),
+      type: item.type,
+      category: item.category,
+      paymentMethod: item.paymentMethod,
+      amount: item.amount,
+      description: item.description
     }
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data)
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    const response = await fetch('/api/transaction', {
+      method: 'PUT',
+      body: JSON.stringify({
+        ...data,
+        userId: session?.user?.id,
+        id: item.id
+      })
+    })
+    const result: any = await response.json()
+
+    if (!response.ok) {
+      toast.error(result.message)
+    } else {
+      toast.success(result.message)
+      setOpen(false)
+      form.reset()
+    }
   }
 
   return (
-    <Drawer direction={isMobile ? 'bottom' : 'right'}>
+    <Drawer direction={isMobile ? 'bottom' : 'right'} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant="link" className="text-foreground w-fit truncate px-0 text-left font-normal">
           {format(new Date(item.date), 'dd MMMM yyyy', { locale: id })}
@@ -91,7 +118,7 @@ export default function TableCellViewer({ item }: { item: z.infer<typeof transac
         </DrawerHeader>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(mutation.mutate)}
             className="flex flex-col gap-4 overflow-auto px-4 text-sm"
           >
             <div className="space-y-6">
@@ -240,9 +267,6 @@ export default function TableCellViewer({ item }: { item: z.infer<typeof transac
             </div>
             <DrawerFooter className="px-0">
               <Button type="submit">Simpan</Button>
-              <DrawerClose asChild>
-                <Button variant="destructive">Hapus</Button>
-              </DrawerClose>
             </DrawerFooter>
           </form>
         </Form>

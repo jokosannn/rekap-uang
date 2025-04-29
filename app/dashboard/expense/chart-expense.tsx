@@ -22,7 +22,6 @@ import {
 } from '@/components/ui/chart'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import data from '@/constants/transaction.json'
 import { cn, formatNumber, formatRupiah } from '@/lib/utils'
 import {
   filterTransactions,
@@ -37,7 +36,7 @@ const chartDefault = [
   { kategori: 'transportasi', total: 0, fill: 'var(--color-transportasi)' },
   { kategori: 'belanja', total: 0, fill: 'var(--color-belanja)' },
   { kategori: 'hiburan', total: 0, fill: 'var(--color-hiburan)' },
-  { kategori: 'lainya', total: 0, fill: 'var(--color-lainya)' }
+  { kategori: 'lainnya', total: 0, fill: 'var(--color-lainnya)' }
 ]
 
 const chartConfig = {
@@ -67,20 +66,18 @@ const chartConfigCategory = {
     label: 'Hiburan',
     color: 'var(--chart-4)'
   },
-  lainya: {
-    label: 'Lainya',
+  lainnya: {
+    label: 'Lainnya',
     color: 'var(--chart-5)'
   }
 } satisfies ChartConfig
 
-export function ChartExpense() {
+export function ChartExpense({ data }: { data: any }) {
   const [timeRange, setTimeRange] = React.useState<number>(30)
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: subDays(new Date(), 30),
     to: new Date()
   })
-
-  const firstDate = new Date([...data].sort((a, b) => a.date.localeCompare(b.date))[0].date) // tanggal terlama
 
   const startTimeLabel = date?.from && format(new Date(date?.from), 'dd MMMM yyyy', { locale: id }) // label date from
   const endTimeLabel = date?.to && format(new Date(date?.to), 'dd MMMM yyyy', { locale: id }) // label date to
@@ -114,7 +111,7 @@ export function ChartExpense() {
   }, [date])
 
   // category
-  const summary = getMonthlyCategoryTransactions(data as Transaction[], date)
+  const summary = getMonthlyCategoryTransactions(data as Transaction[], 'Expense', date)
   const chartDataCategory = chartDefault.map(tx => {
     const found = summary.find(s => s.kategori === tx.kategori)
     return {
@@ -195,7 +192,7 @@ export function ChartExpense() {
                   selected={date}
                   onSelect={setDate}
                   numberOfMonths={2}
-                  disabled={date => date > new Date() || date < new Date(firstDate)}
+                  disabled={date => date > new Date()}
                 />
               </div>
             </PopoverContent>
