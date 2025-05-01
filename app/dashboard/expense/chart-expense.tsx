@@ -133,9 +133,9 @@ export function ChartExpense({ data }: { data: any }) {
     <Card className="@container/card">
       <CardHeader className="flex flex-col items-center gap-2 space-y-0 border-b sm:flex-row">
         <div className="grid flex-1 gap-1 text-center sm:text-left">
-          <CardTitle>Pemasukan Anda</CardTitle>
+          <CardTitle>Pengeluaran Anda</CardTitle>
           <CardDescription>
-            Menampilkan total pemasukan periode {startTimeLabel}{' '}
+            Menampilkan total pengeluaran periode {startTimeLabel}{' '}
             {endTimeLabel ? `- ${endTimeLabel}` : ''} ({days === 0 ? '1' : days} days)
           </CardDescription>
         </div>
@@ -270,9 +270,9 @@ export function ChartExpense({ data }: { data: any }) {
       </CardContent>
       <CardContent className="space-y-6 border-b px-2 pt-4 pb-6 sm:px-6 sm:pt-6">
         <div className="flex w-full flex-col items-center justify-center gap-1 text-center">
-          <div className="leading-none font-semibold">Pemasukan Bulanan</div>
+          <div className="leading-none font-semibold">Pengeluaran Bulanan</div>
           <div className="text-muted-foreground text-sm">
-            Pemasukan berdasarkan sumber periode {startTimeLabel}{' '}
+            Pengeluaran berdasarkan sumber periode {startTimeLabel}{' '}
             {endTimeLabel ? `- ${endTimeLabel}` : ''} ({days === 0 ? '1' : days} days)
           </div>
         </div>
@@ -313,7 +313,7 @@ export function ChartExpense({ data }: { data: any }) {
       </CardContent>
       <CardContent className="space-y-6 px-2 pt-4 sm:px-6 sm:pt-6">
         <div className="flex w-full flex-col items-center justify-center gap-1 text-center">
-          <div className="leading-none font-semibold">Riwayat Transaksi Pemasukan</div>
+          <div className="leading-none font-semibold">Riwayat Transaksi Pengeluaran</div>
           <div className="text-muted-foreground text-sm">
             Menampilkan max 5 transaksi terbaru periode {startTimeLabel}{' '}
             {endTimeLabel ? `- ${endTimeLabel}` : ''} ({days === 0 ? '1' : days} days)

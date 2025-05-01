@@ -2,6 +2,8 @@ import React, { Suspense } from 'react'
 
 import { GalleryVerticalEnd } from 'lucide-react'
 
+import LoadingSpinner from '@/components/loading-spinner'
+
 import { LoginForm } from './login-form'
 
 export default function SignIn() {
@@ -14,7 +16,7 @@ export default function SignIn() {
           </div>
           Acme Inc.
         </a>
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <LoginForm />
         </Suspense>
       </div>

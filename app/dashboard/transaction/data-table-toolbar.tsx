@@ -14,6 +14,7 @@ import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
 
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
@@ -23,6 +24,8 @@ interface DataTableToolbarProps<TData> {
 }
 
 export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>) {
+  const isMobile = useIsMobile()
+
   const [date, setDate] = React.useState<DateRange | undefined>(undefined)
   const isFiltered = table.getState().columnFilters.length > 0
 
@@ -139,7 +142,10 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="flex w-auto flex-col space-y-2 p-2" align="end">
+            <PopoverContent
+              className="flex w-auto flex-col space-y-2 p-2"
+              align={isMobile ? 'start' : 'end'}
+            >
               <Select
                 onValueChange={value =>
                   setDate({

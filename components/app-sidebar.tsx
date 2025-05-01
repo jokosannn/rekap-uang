@@ -3,6 +3,7 @@
 import * as React from 'react'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import {
   IconCreditCardPay,
@@ -21,7 +22,8 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem,
+  useSidebar
 } from '@/components/ui/sidebar'
 
 const data = {
@@ -55,7 +57,12 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  // const { data: user } = useSession()
+  const { setOpenMobile } = useSidebar()
+  const pathname = usePathname()
+
+  React.useEffect(() => {
+    setOpenMobile(false)
+  }, [pathname])
 
   return (
     <Sidebar collapsible="icon" {...props}>

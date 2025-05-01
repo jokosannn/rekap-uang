@@ -1,5 +1,7 @@
 'use client'
 
+import { Coffee } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
@@ -21,14 +23,15 @@ export function SiteHeader() {
           </BreadcrumbList>
         </Breadcrumb>
         <div className="ml-auto flex items-center gap-2">
-          <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
+          <Button variant="ghost" asChild>
             <a
-              href="https://github.com/shadcn-ui/ui/tree/main/apps/v4/app/(examples)/dashboard"
+              href="https://saweria.co/jokosannn"
               rel="noopener noreferrer"
               target="_blank"
               className="dark:text-foreground"
             >
-              GitHub
+              <Coffee size={20} strokeWidth={1.5} />
+              <span className="mt-0.5 text-sm">Traktir Kopi</span>
             </a>
           </Button>
 

@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { Bar, BarChart, LabelList, XAxis, YAxis } from 'recharts'
 
+import LoadingSpinner from '@/components/loading-spinner'
 import {
   Card,
   CardContent,
@@ -63,7 +64,7 @@ export function ChartCategoryIncome() {
   } = useQuery({ queryKey: ['transactions'], queryFn: fetchTransactions })
 
   const isLoading = isPending || isFetching || status === 'loading'
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <LoadingSpinner />
 
   const data = results.filter((v: any) => v.userId === session?.user.id)
 
@@ -77,8 +78,6 @@ export function ChartCategoryIncome() {
   })
 
   const total = React.useMemo(() => chartData.reduce((acc, curr) => acc + curr.total, 0), [chartData])
-
-  console.log(chartData)
 
   return (
     <Card>

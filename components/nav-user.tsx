@@ -17,15 +17,14 @@ import {
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar'
 
 import Image from './image'
+import LoadingSpinner from './loading-spinner'
 
 export function NavUser() {
   const { isMobile } = useSidebar()
 
   const { data, status } = useSession()
 
-  if (status === 'loading') {
-    return <p>Loading...</p>
-  }
+  if (status === 'loading') return <LoadingSpinner />
 
   const user = data?.user
 

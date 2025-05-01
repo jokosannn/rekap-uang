@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Bricolage_Grotesque, Geist, Geist_Mono } from 'next/font/google'
 
+import NextTopLoader from 'nextjs-toploader'
 import { Toaster } from 'sonner'
 
 import AuthProvider from '@/components/auth-provider'
@@ -37,6 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} antialiased`}>
+        <NextTopLoader />
         <TanstackQueryProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <AuthProvider>

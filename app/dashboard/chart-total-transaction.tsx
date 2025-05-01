@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts'
 
+import LoadingSpinner from '@/components/loading-spinner'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   ChartConfig,
@@ -42,7 +43,7 @@ export function ChartTotalTransaction() {
   } = useQuery({ queryKey: ['transactions'], queryFn: fetchTransactions })
 
   const isLoading = isPending || isFetching || status === 'loading'
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <LoadingSpinner />
 
   const data = results.filter((v: any) => v.userId === session?.user.id)
 
